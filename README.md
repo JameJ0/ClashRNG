@@ -17,3 +17,11 @@ The application will display a heads-up display (HUD) of the player's stats (lik
 
 This project is of interest to be becasue I've always played video games my whole life, but have never thought to create one myself. I've attempted to create a game in highschool, but the code was a mess becasue of a lack of coding experience. I hope that through this project, I'll have another shot at making a well organized netword of code and classes that is (mostly) bug free, easy to modify for the developer, and can be easily read by someone else.
 
+## User Stories
+
+- As a user, I want to have the options to select different classes of characters at the start of the game
+- As a user, I want the character move in the direction that I want it to
+- As a user, I want to be able to see my health, mana levle, and the list of weapons I currently own at all times
+- As a user, I want to be able to add a dropped item on the ground to my inventory
+- As a user, I want to be able to remove an enemy from the play field when its health drops to 0
+
