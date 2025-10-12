@@ -27,8 +27,8 @@ public class TestEntity {
     @Test
     void testAddLoot() {
         e.addLoot(5);
-        assertEquals(5,e.getLoot());
+        assertEquals(5, e.getLoot());
         e.addLoot(10);
-        assertEquals(15,e.getLoot());
+        assertEquals(15, e.getLoot());
     }
 }

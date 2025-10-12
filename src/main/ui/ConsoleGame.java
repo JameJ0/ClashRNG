@@ -1,9 +1,6 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Random;
-
+import java.util.*;
 import model.*;
 
 public class ConsoleGame {
@@ -121,8 +118,31 @@ public class ConsoleGame {
         } else {
             System.out.println("\nYou've defeated " + enemy + "!");
             player.addLoot(enemy.getLoot());
-
+            double rng = 100 * Math.random();
+            if (rng < 50) {
+                Item drop = generateDrop(rng);
+                player.getInventory().add(drop);
+                System.out.println("You picked up a " + drop + "!");
+            } else {
+                System.out.println("The enemy didn't drop anything!");
+            }
         }
+    }
+
+    public Item generateDrop(double n) {
+        String rarity;
+        if (n < 1) {
+            rarity = "Legendary";
+        } else if (n < 3) {
+            rarity = "Epic";
+        } else if (n < 10) {
+            rarity = "Rare";
+        } else if (n < 25) {
+            rarity = "Uncommon";
+        } else {
+            rarity = "Common";
+        }
+        return new Item("Item", 0, rarity);
     }
 
     public void printInventory(Entity e) {

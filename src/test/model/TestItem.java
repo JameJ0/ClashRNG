@@ -5,7 +5,7 @@ import org.junit.jupiter.api.*;
 
 public class TestItem {
 
-    Item i1, i2, i3 ,i4 ,i5;
+    Item i1, i2, i3, i4, i5;
 
     @BeforeEach
     void runBefore() {
