@@ -91,7 +91,7 @@ public class ConsoleGame {
             System.out.println("\nYour HP: " + player.getHealth());
             System.out.println("Eenmy HP: " + enemy.getHealth());
             System.out.println("\nWhat will you do?");
-            System.out.println("\nfight(f)  stats(s)\n");
+            System.out.println("\nfight(f)  stats(s)  view inventory(i)\n");
             while (!picked) {
                 String input = sc.next();
                 switch (input) {
@@ -107,6 +107,8 @@ public class ConsoleGame {
                     case "s":
                         printStats(player);
                         break;
+                    case "i":
+                        printInventory(player);
                     default:
                         System.out.println("\nPlease choose from the available options.\n");
                         break;
@@ -117,6 +119,12 @@ public class ConsoleGame {
             gameOver = true;
         } else {
             System.out.println("\nYou've defeated " + enemy + "!");
+        }
+    }
+
+    public void printInventory(Entity e) {
+        for(Item i : e.getInventory()){
+            System.out.println(i);
         }
     }
 
