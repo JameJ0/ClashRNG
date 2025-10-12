@@ -4,10 +4,12 @@ package model;
 public class Item {
     int weight;
     String name;
+    String rarity;
 
-    public Item(String name, int weight) {
+    public Item(String name, int weight, String rarity) {
         this.weight = weight;
         this.name = name;
+        this.rarity = rarity;
     }
 
     public String getName() {
@@ -16,5 +18,13 @@ public class Item {
 
     public int getWeight() {
         return weight;
+    }
+
+    public String getRarity() {
+        return rarity;
+    }
+
+    public String toString() {
+        return getRarity() + " " + getName();
     }
 }

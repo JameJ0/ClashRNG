@@ -15,6 +15,7 @@ public class Entity {
 
     public Entity() {
         inventory = new ArrayList<>();
+        loot = 0;
     }
 
     public double getHealth() {
@@ -35,6 +36,14 @@ public class Entity {
 
     public double getSpeed() {
         return speed;
+    }
+
+    public int getLoot() {
+        return loot;
+    }
+
+    public void addLoot(int n) {
+        loot += n;
     }
 
     public void setHealth(double health) {

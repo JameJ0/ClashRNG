@@ -109,6 +109,7 @@ public class ConsoleGame {
                         break;
                     case "i":
                         printInventory(player);
+                        break;
                     default:
                         System.out.println("\nPlease choose from the available options.\n");
                         break;
@@ -119,12 +120,21 @@ public class ConsoleGame {
             gameOver = true;
         } else {
             System.out.println("\nYou've defeated " + enemy + "!");
+            player.addLoot(enemy.getLoot());
+
         }
     }
 
     public void printInventory(Entity e) {
-        for(Item i : e.getInventory()){
-            System.out.println(i);
+        System.out.println("\nYou have " + player.getLoot() + " coins.");
+        if (e.getInventory().isEmpty()) {
+            System.out.println("You have nothing in your inventory...\n");
+        } else {
+            System.out.println("Here's what's in your inventory:");
+            for (Item i : e.getInventory()) {
+                System.out.println(i);
+            }
+            System.out.println();
         }
     }
 

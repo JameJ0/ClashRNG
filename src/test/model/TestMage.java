@@ -19,6 +19,7 @@ public class TestMage {
         assertEquals(0, m.getDefense());
         assertEquals(15, m.getAttack());
         assertEquals(100, m.getMana());
+        assertEquals(0, m.getLoot());
     }
 
     @Test

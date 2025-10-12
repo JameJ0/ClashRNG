@@ -19,6 +19,7 @@ public class TestGoblin {
         assertEquals(1, g.getDefense());
         assertEquals(4, g.getAttack());
         assertEquals(0, g.getMana());
+        assertEquals(5, g.getLoot());
     }
 
     @Test

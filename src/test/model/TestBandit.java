@@ -19,6 +19,7 @@ public class TestBandit {
         assertEquals(1, b.getDefense());
         assertEquals(10, b.getAttack());
         assertEquals(50, b.getMana());
+        assertEquals(0, b.getLoot());
     }
 
     @Test

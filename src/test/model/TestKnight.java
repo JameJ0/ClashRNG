@@ -19,6 +19,7 @@ public class TestKnight {
         assertEquals(3, k.getDefense());
         assertEquals(5, k.getAttack());
         assertEquals(50, k.getMana());
+        assertEquals(0, k.getLoot());
     }
 
     @Test

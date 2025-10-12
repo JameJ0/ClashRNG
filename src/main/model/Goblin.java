@@ -1,5 +1,7 @@
 package model;
 
+import java.lang.Math;
+
 // Represents an easy enemy entity  with random stats
 public class Goblin extends Entity {
 
@@ -10,7 +12,9 @@ public class Goblin extends Entity {
         defense = 1;
         attack = 4;
         mana = 0;
-        
+        loot = 5;
+        double randNum = Math.random();
+
     }
 
     public String toString() {
