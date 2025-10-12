@@ -9,6 +9,8 @@ public class Entity {
     protected double defense;
     protected double mana;
     protected double speed;
+    protected int loot;
+
     protected ArrayList<Item> inventory;
 
     public Entity() {

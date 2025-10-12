@@ -10,6 +10,7 @@ public class Goblin extends Entity {
         defense = 1;
         attack = 4;
         mana = 0;
+        
     }
 
     public String toString() {
