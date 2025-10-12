@@ -4,9 +4,9 @@ public class Mage extends Entity {
 
     public Mage(){
         super();
-        health = 50;
+        health = 10;
         speed = 3;
-        defense = 5;
+        defense = 0;
         attack = 15;
         mana = 100;
     }

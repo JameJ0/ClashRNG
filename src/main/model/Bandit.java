@@ -4,9 +4,9 @@ public class Bandit extends Entity {
 
     public Bandit(){
         super();
-        health = 75;
+        health = 15;
         speed = 5;
-        defense = 10;
+        defense = 1;
         attack = 10;
         mana = 50;
     }

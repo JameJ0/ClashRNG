@@ -1,17 +1,22 @@
 package model;
 
+import java.util.Random;
+
 public class Goblin extends Entity{
 
+    Random r = new Random();
+    
     public Goblin() {
         super();
-        health = 20;
-        speed = 5;
-        defense = 1;
-        attack = 5;
+        health = r.nextInt(10)+15;
+        speed = r.nextInt(2)+3;
+        defense = r.nextInt(2)+1;
+        attack = r.nextInt(3)+4;
         mana = 0;
     }
 
     public String toString(){
         return "Goblin";
     }
+    
 }

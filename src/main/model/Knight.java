@@ -4,10 +4,10 @@ public class Knight extends Entity {
 
     public Knight(){
         super();
-        health = 100;
+        health = 20;
         speed = 2;
-        defense = 20;
-        attack = 10;
+        defense = 2;
+        attack = 5;
         mana = 50;
     }
     

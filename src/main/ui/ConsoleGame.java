@@ -1,5 +1,7 @@
 package ui;
 
+import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
@@ -17,9 +19,16 @@ public class ConsoleGame {
     public ConsoleGame() {
         init();
         roleSelect();
-        printStats();
-        while (!gameOver) {
-            runGame();
+        player.printStats();
+        System.out.println("Are you ready to start? (enter any text to continue)\n");
+        sc.next();
+        System.out.println("\nLevel 1-1 (console demo level)");
+        generateEnemies();
+        runGame();
+        if (gameOver) {
+            System.out.println("\nYou lost!");
+        } else {
+            System.out.println("\nYou won!");
         }
     }
 
@@ -31,11 +40,10 @@ public class ConsoleGame {
     }
 
     public void roleSelect() {
-        System.out.println("Welcome to the game!");
         boolean picked = false;
-        System.out.println("Please select your class:");
-        System.out.println("Knight(k)  Mage(m)  Bandit(b)");
-        System.out.println("(type the corresponding letter in paranthesis)");
+        System.out.println("\n\n\n\n\n\n\nWelcome to the game!");
+        System.out.println("Please select your class (type the corresponding letter in the paranthesis):");
+        System.out.println("\nKnight(k)  Mage(m)  Bandit(b)\n");
         while (!picked) {
             String input = sc.next();
             switch (input) {
@@ -52,21 +60,65 @@ public class ConsoleGame {
                     picked = true;
                     break;
                 default:
-                    System.out.println("Please choose from the available options.");
+                    System.out.println("\nPlease choose from the available options.\n");
                     break;
             }
         }
-        System.out.println("You chose the "+ player +" class!");
+        System.out.println("\nYou chose the " + player + " class! Here are your stats:\n");
     }
 
-    public void printStats(){
-        System.out.println("-----------------------------");
-        System.out.println(player);
-        
+    public void generateEnemies() {
+        int randNum = r.nextInt(5) + 1;
+        for (int i = 0; i < randNum; i++) {
+            enemies.add(new Goblin());
+        }
+        System.out.println("There are " + enemies.size() + " enemie(s) in this room.");
+    }
+
+    public void fight(Entity enemy) {
+        while (player.getHealth() > 0 && enemy.getHealth() > 0) {
+            boolean picked = false;
+
+            System.out.println("\nYour HP: " + player.getHealth());
+            System.out.println("Eenmy HP: " + enemy.getHealth());
+            System.out.println("\nWhat will you do?");
+            System.out.println("\nfight(f)  stats(s)\n");
+            while (!picked) {
+                String input = sc.next();
+                switch (input) {
+                    case "f":
+                        double playerTrueDamage = player.getAttack() - enemy.getDefense();
+                        double enemyTrueDamage = enemy.getAttack() - player.getDefense();
+                        enemy.setHealth(enemy.getHealth() - playerTrueDamage);
+                        player.setHealth(player.getHealth() - enemyTrueDamage);
+                        System.out.println("\nThe enemie has taken " + playerTrueDamage + " damage.");
+                        System.out.println("\nThe player has taken " + enemyTrueDamage + " damage.");
+                        picked = true;
+                        break;
+                    case "s":
+                        player.printStats();
+                        break;
+                    default:
+                        System.out.println("\nPlease choose from the available options.\n");
+                        break;
+                }
+            }
+        }
+        if (player.getHealth() < 0) {
+            gameOver = true;
+        } else {
+            System.out.println("\nYou've defeated " + enemy + "!");
+        }
     }
 
     public void runGame() {
-        String input = sc.nextLine();
+        while (!enemies.isEmpty() && !gameOver) {
+            Entity currentEnemy = enemies.get(0);
+            System.out.println("\nYou've encountered a " + currentEnemy + "!");
+            fight(currentEnemy);
+            enemies.remove(0);
+        }
+
     }
 
 }
