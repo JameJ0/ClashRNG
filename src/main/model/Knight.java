@@ -1,9 +1,11 @@
 package model;
 
-public class Knight extends Player {
+public class Knight extends Entity {
 
-    public Knight(String name){
-        super(name);
+    private String name;
+
+    public Knight(){
+        super();
         health = 100;
         speed = 2;
         defense = 20;

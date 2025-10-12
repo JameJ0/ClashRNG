@@ -1,9 +1,9 @@
 package model;
 
-public class Bandit extends Player {
+public class Bandit extends Entity {
 
-    public Bandit(String name){
-        super(name);
+    public Bandit(){
+        super();
         health = 75;
         speed = 5;
         defense = 10;

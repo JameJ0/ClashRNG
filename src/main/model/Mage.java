@@ -1,9 +1,8 @@
 package model;
 
-public class Mage extends Player {
+public class Mage extends Entity {
 
-    public Mage(String name){
-        super(name);
+    public Mage(){
         health = 50;
         speed = 3;
         defense = 5;
