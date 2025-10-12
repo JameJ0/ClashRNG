@@ -13,4 +13,6 @@ public class Entity {
     public Entity() {
         inventory = new ArrayList<>();
     }
+
+    
 }

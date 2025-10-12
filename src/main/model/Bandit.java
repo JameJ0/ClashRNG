@@ -11,4 +11,7 @@ public class Bandit extends Entity {
         mana = 50;
     }
     
+    public String toString(){
+        return "Bandit";
+    }
 }

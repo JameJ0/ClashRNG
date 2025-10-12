@@ -2,8 +2,6 @@ package model;
 
 public class Knight extends Entity {
 
-    private String name;
-
     public Knight(){
         super();
         health = 100;
@@ -13,4 +11,7 @@ public class Knight extends Entity {
         mana = 50;
     }
     
+    public String toString(){
+        return "Knight";
+    }
 }

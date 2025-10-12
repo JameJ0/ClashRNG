@@ -3,6 +3,7 @@ package model;
 public class Mage extends Entity {
 
     public Mage(){
+        super();
         health = 50;
         speed = 3;
         defense = 5;
@@ -10,4 +11,7 @@ public class Mage extends Entity {
         mana = 100;
     }
     
+    public String toString(){
+        return "Mage";
+    }
 }
