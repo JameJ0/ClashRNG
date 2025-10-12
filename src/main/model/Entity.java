@@ -15,17 +15,6 @@ public class Entity {
         inventory = new ArrayList<>();
     }
 
-    public void printStats() {
-        System.out.println();
-        System.out.println("Attack = " + getAttack());
-        System.out.println("Defense = " + getDefense());
-        System.out.println("Speed = " + getSpeed());
-        System.out.println("Mana = " + getMana());
-        System.out.println("Health = " + getHealth());
-        System.out.println();
-
-    }
-
     public double getHealth() {
         return health;
     }
@@ -48,5 +37,9 @@ public class Entity {
 
     public void setHealth(double health) {
         this.health = health;
+    }
+
+    public ArrayList<Item> getInventory() {
+        return inventory;
     }
 }

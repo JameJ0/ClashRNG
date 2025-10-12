@@ -17,7 +17,7 @@ public class ConsoleGame {
     public ConsoleGame() {
         init();
         roleSelect();
-        player.printStats();
+        printStats(player);
         System.out.println("Are you ready to start? (enter any text to continue)\n");
         sc.next();
         System.out.println("\nLevel 1-1 (console demo level)");
@@ -35,6 +35,17 @@ public class ConsoleGame {
         enemies = new ArrayList<>();
         gameOver = false;
         r = new Random();
+    }
+
+    public void printStats(Entity e) {
+        System.out.println();
+        System.out.println("Attack = " + e.getAttack());
+        System.out.println("Defense = " + e.getDefense());
+        System.out.println("Speed = " + e.getSpeed());
+        System.out.println("Mana = " + e.getMana());
+        System.out.println("Health = " + e.getHealth());
+        System.out.println();
+
     }
 
     public void roleSelect() {
@@ -94,7 +105,7 @@ public class ConsoleGame {
                         picked = true;
                         break;
                     case "s":
-                        player.printStats();
+                        printStats(player);
                         break;
                     default:
                         System.out.println("\nPlease choose from the available options.\n");

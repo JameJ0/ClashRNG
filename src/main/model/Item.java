@@ -9,4 +9,12 @@ public class Item {
         this.weight = weight;
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
 }

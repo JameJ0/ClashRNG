@@ -4,14 +4,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
 public class TestItem {
-    
+
+    Item i;
+
     @BeforeEach
     void runBefore() {
-
+        i = new Item("Item", 1);
     }
 
     @Test
-    void sampleTest() {
-        assertTrue(true);
+    void testConstructor() {
+        assertTrue(i.getName().equals("Item"));
+        assertEquals(1, i.getWeight());
     }
 }
