@@ -1,5 +1,6 @@
 package model;
 
+// Represents an entity in the game, like the player or an enemy, for example.
 import java.util.ArrayList;
 
 public class Entity {
@@ -14,7 +15,7 @@ public class Entity {
         inventory = new ArrayList<>();
     }
 
-    public void printStats(){
+    public void printStats() {
         System.out.println();
         System.out.println("Attack = " + getAttack());
         System.out.println("Defense = " + getDefense());
@@ -45,7 +46,7 @@ public class Entity {
         return speed;
     }
 
-    public void setHealth(double health){
+    public void setHealth(double health) {
         this.health = health;
     }
 }

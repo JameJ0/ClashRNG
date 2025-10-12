@@ -1,8 +1,9 @@
 package model;
 
+// Represents a playable character with high speed and low defense
 public class Bandit extends Entity {
 
-    public Bandit(){
+    public Bandit() {
         super();
         health = 15;
         speed = 5;
@@ -10,8 +11,8 @@ public class Bandit extends Entity {
         attack = 10;
         mana = 50;
     }
-    
-    public String toString(){
+
+    public String toString() {
         return "Bandit";
     }
 }

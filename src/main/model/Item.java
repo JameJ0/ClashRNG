@@ -1,5 +1,6 @@
 package model;
 
+// Representation of an item in the game, which can be placed in an inventory
 public class Item {
     int weight;
     String name;

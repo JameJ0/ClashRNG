@@ -1,7 +1,5 @@
 package ui;
 
-import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
@@ -26,9 +24,9 @@ public class ConsoleGame {
         generateEnemies();
         runGame();
         if (gameOver) {
-            System.out.println("\nYou lost!");
+            System.out.println("\nYou lost!\n");
         } else {
-            System.out.println("\nYou won!");
+            System.out.println("\nYou won!\n");
         }
     }
 
