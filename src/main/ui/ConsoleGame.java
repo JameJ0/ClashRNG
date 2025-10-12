@@ -8,17 +8,16 @@ public class ConsoleGame {
     private Scanner sc;
     private ArrayList<Entity> enemies;
     private boolean gameOver;
-    private Random r;
+    private Random rand;
     private Entity player;
 
     public ConsoleGame() {
         init();
+        welcome();
         roleSelect();
         printStats(player);
-        System.out.println("Are you ready to start? (enter any text to continue)\n");
-        sc.next();
-        System.out.println("\nLevel 1-1 (console demo level)");
-        generateEnemies();
+        pause();
+        preLevel();
         runGame();
         if (gameOver) {
             System.out.println("\nYou lost!\n");
@@ -31,7 +30,27 @@ public class ConsoleGame {
         sc = new Scanner(System.in);
         enemies = new ArrayList<>();
         gameOver = false;
-        r = new Random();
+        rand = new Random();
+    }
+
+    public void pause() {
+        System.out.println("Take a minute to read this, then enter any text to continue.");
+        sc.next();
+    }
+
+    public void preLevel() {
+        generateEnemies();
+        System.out.println("\n        Level 1-1 (console demo level)");
+        System.out.println("-----------------------------------------------");
+        System.out.println(
+                "In this level, there will be anywhere from 2 to 6 goblin-type enemies, which you fight sequentially.");
+        System.out.println("Fight through the enemies, and perhaps even earn loot and drops along the way.");
+        System.out.println(
+                "Be careful. once your health drops to 0, you lose. You will not keep your items in your next run.");
+        System.out.println("Good luck, have fun!!\n");
+        System.out.println(
+                "(This is just an oversimplified and modified version of my vision of the game, for Phase 1.)");
+        pause();
     }
 
     public void printStats(Entity e) {
@@ -45,11 +64,14 @@ public class ConsoleGame {
 
     }
 
-    public void roleSelect() {
-        boolean picked = false;
+    public void welcome() {
         System.out.println("\n\n\n\n\n\n\nWelcome to the game!");
         System.out.println("Please select your class (type the corresponding letter in the paranthesis):");
         System.out.println("\nKnight(k)  Mage(m)  Bandit(b)\n");
+    }
+
+    public void roleSelect() {
+        boolean picked = false;
         while (!picked) {
             String input = sc.next();
             switch (input) {
@@ -74,31 +96,29 @@ public class ConsoleGame {
     }
 
     public void generateEnemies() {
-        int randNum = r.nextInt(5) + 1;
+        int randNum = rand.nextInt(5) + 2;
         for (int i = 0; i < randNum; i++) {
             enemies.add(new Goblin());
         }
         System.out.println("There are " + enemies.size() + " enemie(s) in this room.");
     }
 
-    public void fight(Entity enemy) {
+    public void printBattleStatus(Entity enemy) {
+        System.out.println("\nYour HP: " + player.getHealth());
+        System.out.println("Enemy HP: " + enemy.getHealth());
+        System.out.println("\nWhat will you do?");
+        System.out.println("\nfight(f)  stats(s)  view inventory(i)\n");
+    }
+
+    public void battle(Entity enemy) {
         while (player.getHealth() > 0 && enemy.getHealth() > 0) {
             boolean picked = false;
-
-            System.out.println("\nYour HP: " + player.getHealth());
-            System.out.println("Eenmy HP: " + enemy.getHealth());
-            System.out.println("\nWhat will you do?");
-            System.out.println("\nfight(f)  stats(s)  view inventory(i)\n");
+            printBattleStatus(enemy);
             while (!picked) {
                 String input = sc.next();
                 switch (input) {
                     case "f":
-                        double playerTrueDamage = player.getAttack() - enemy.getDefense();
-                        double enemyTrueDamage = enemy.getAttack() - player.getDefense();
-                        enemy.setHealth(enemy.getHealth() - playerTrueDamage);
-                        player.setHealth(player.getHealth() - enemyTrueDamage);
-                        System.out.println("\nThe enemie has taken " + playerTrueDamage + " damage.");
-                        System.out.println("\nThe player has taken " + enemyTrueDamage + " damage.");
+                        calculateDamage(enemy);
                         picked = true;
                         break;
                     case "s":
@@ -113,6 +133,10 @@ public class ConsoleGame {
                 }
             }
         }
+        handleResults(enemy);
+    }
+
+    public void handleResults(Entity enemy) {
         if (player.getHealth() < 0) {
             gameOver = true;
         } else {
@@ -127,6 +151,15 @@ public class ConsoleGame {
                 System.out.println("The enemy didn't drop anything!");
             }
         }
+    }
+
+    public void calculateDamage(Entity enemy) {
+        double playerTrueDamage = player.getAttack() - enemy.getDefense();
+        double enemyTrueDamage = enemy.getAttack() - player.getDefense();
+        enemy.setHealth(enemy.getHealth() - playerTrueDamage);
+        player.setHealth(player.getHealth() - enemyTrueDamage);
+        System.out.println("\nThe enemy took " + playerTrueDamage + " damage.");
+        System.out.println("\nThe player took " + enemyTrueDamage + " damage.");
     }
 
     public Item generateDrop(double n) {
@@ -146,7 +179,7 @@ public class ConsoleGame {
     }
 
     public void printInventory(Entity e) {
-        System.out.println("\nYou have " + player.getLoot() + " coins.");
+        System.out.println("\nYou have " + player.getLoot() + " coins.\n");
         if (e.getInventory().isEmpty()) {
             System.out.println("You have nothing in your inventory...\n");
         } else {
@@ -162,7 +195,7 @@ public class ConsoleGame {
         while (!enemies.isEmpty() && !gameOver) {
             Entity currentEnemy = enemies.get(0);
             System.out.println("\nYou've encountered a " + currentEnemy + "!");
-            fight(currentEnemy);
+            battle(currentEnemy);
             enemies.remove(0);
         }
 

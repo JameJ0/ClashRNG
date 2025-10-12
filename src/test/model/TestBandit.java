@@ -5,25 +5,25 @@ import org.junit.jupiter.api.*;
 
 public class TestBandit {
 
-    Bandit b;
+    Bandit bandit;
 
     @BeforeEach
     void runBefore() {
-        b = new Bandit();
+        bandit = new Bandit();
     }
 
     @Test
     void testConstructor() {
-        assertEquals(15, b.getHealth());
-        assertEquals(5, b.getSpeed());
-        assertEquals(1, b.getDefense());
-        assertEquals(10, b.getAttack());
-        assertEquals(50, b.getMana());
-        assertEquals(0, b.getLoot());
+        assertEquals(15, bandit.getHealth());
+        assertEquals(5, bandit.getSpeed());
+        assertEquals(1, bandit.getDefense());
+        assertEquals(10, bandit.getAttack());
+        assertEquals(50, bandit.getMana());
+        assertEquals(0, bandit.getLoot());
     }
 
     @Test
     void testToString() {
-        assertEquals("Bandit", b.toString());
+        assertEquals("Bandit", bandit.toString());
     }
 }

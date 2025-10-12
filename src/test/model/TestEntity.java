@@ -5,30 +5,30 @@ import org.junit.jupiter.api.*;
 
 public class TestEntity {
 
-    Entity e;
+    Entity entity;
 
     @BeforeEach
     void runBefore() {
-        e = new Entity();
+        entity = new Entity();
     }
 
     @Test
     void testConstructor() {
-        assertEquals(0, e.getInventory().size());
-        assertEquals(0, e.getLoot());
+        assertEquals(0, entity.getInventory().size());
+        assertEquals(0, entity.getLoot());
     }
 
     @Test
     void testSetHealth() {
-        e.setHealth(0);
-        assertEquals(0, e.getHealth());
+        entity.setHealth(0);
+        assertEquals(0, entity.getHealth());
     }
 
     @Test
     void testAddLoot() {
-        e.addLoot(5);
-        assertEquals(5, e.getLoot());
-        e.addLoot(10);
-        assertEquals(15, e.getLoot());
+        entity.addLoot(5);
+        assertEquals(5, entity.getLoot());
+        entity.addLoot(10);
+        assertEquals(15, entity.getLoot());
     }
 }

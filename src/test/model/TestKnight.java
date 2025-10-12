@@ -5,25 +5,25 @@ import org.junit.jupiter.api.*;
 
 public class TestKnight {
 
-    Knight k;
+    Knight knight;
 
     @BeforeEach
     void runBefore() {
-        k = new Knight();
+        knight = new Knight();
     }
 
     @Test
     void testConstructor() {
-        assertEquals(20, k.getHealth());
-        assertEquals(2, k.getSpeed());
-        assertEquals(3, k.getDefense());
-        assertEquals(5, k.getAttack());
-        assertEquals(50, k.getMana());
-        assertEquals(0, k.getLoot());
+        assertEquals(20, knight.getHealth());
+        assertEquals(2, knight.getSpeed());
+        assertEquals(3, knight.getDefense());
+        assertEquals(5, knight.getAttack());
+        assertEquals(50, knight.getMana());
+        assertEquals(0, knight.getLoot());
     }
 
     @Test
     void testToString() {
-        assertTrue(k.toString().equals("Knight"));
+        assertTrue(knight.toString().equals("Knight"));
     }
 }
