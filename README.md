@@ -20,8 +20,8 @@ This project is of interest to me because I've always played video games my whol
 ## User Stories
 
 - As a user, I want to have the option to select different classes of characters at the start of the game
-- As a user, I want to be able to see my health, mana level, and the list of weapons I currently own, always
+- As a user, I want to be able to see my health, mana level, and the list of items I currently own
 - As a user, I want to be able to add a dropped item on the ground to my inventory
-- As a user, I want to be able to remove an enemy from the play field when its health drops to 0
+- As a user, I want to be able to remove an enemy from the play field when its health drops below 0
 
 
