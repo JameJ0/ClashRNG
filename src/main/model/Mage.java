@@ -3,6 +3,7 @@ package model;
 // Represents a playable character with low health but extremely high attack
 public class Mage extends Entity {
 
+    // EFFECTS: creates a Mage with specific stats for Mage
     public Mage() {
         super();
         health = 10;

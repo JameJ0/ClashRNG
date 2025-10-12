@@ -3,6 +3,7 @@ package model;
 // Represents a playable character with high speed and low defense
 public class Bandit extends Entity {
 
+    // EFFECTS: creates a Bandit with specific stats for Bandit
     public Bandit() {
         super();
         health = 15;
