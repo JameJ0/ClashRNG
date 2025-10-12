@@ -37,14 +37,16 @@ public class ConsoleGame {
         rand = new Random();
     }
 
-    // EFFECTS: waits for the user to enter something, acting as a pause between large chunks of texts
+    // EFFECTS: waits for the user to enter something, acting as a pause between
+    // large chunks of texts
     public void pause() {
         System.out.println("Take a minute to read this, then enter any text to continue.");
         sc.next();
     }
 
     // MODIFIES: this
-    // EFFECTS: randomly generates 2-6 enemies, and prints ome information about the mechanics of the game
+    // EFFECTS: randomly generates 2-6 enemies, and prints ome information about the
+    // mechanics of the game
     public void preLevel() {
         generateEnemies();
         System.out.println("\n        Level 1-1 (console demo level)");
@@ -60,7 +62,7 @@ public class ConsoleGame {
         pause();
     }
 
-    // EFFECTS: prints an entity's stats 
+    // EFFECTS: prints an entity's stats
     public void printStats(Entity e) {
         System.out.println();
         System.out.println("Attack = " + e.getAttack());
@@ -80,7 +82,8 @@ public class ConsoleGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: asks the user for an input and initialize a playable entity as the player
+    // EFFECTS: asks the user for an input and initialize a playable entity as the
+    // player
     public void roleSelect() {
         boolean picked = false;
         while (!picked) {
@@ -107,7 +110,8 @@ public class ConsoleGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: generate a random int between 2 and 6, then add that number of goblins to the enemies arraylist
+    // EFFECTS: generate a random int between 2 and 6, then add that number of
+    // goblins to the enemies arraylist
     public void generateEnemies() {
         int randNum = rand.nextInt(5) + 2;
         for (int i = 0; i < randNum; i++) {
@@ -125,7 +129,8 @@ public class ConsoleGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: during enemy encounter take in user input, then do something based on that input.
+    // EFFECTS: during enemy encounter take in user input, then do something based
+    // on that input.
     public void battle(Entity enemy) {
         while (player.getHealth() > 0 && enemy.getHealth() > 0) {
             boolean picked = false;
@@ -153,7 +158,8 @@ public class ConsoleGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: handles what should happen after an encounter (whether player/enemy has been defeated)
+    // EFFECTS: handles what should happen after an encounter (whether player/enemy
+    // has been defeated)
     public void handleResults(Entity enemy) {
         if (player.getHealth() < 0) {
             gameOver = true;
@@ -172,7 +178,8 @@ public class ConsoleGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: calculate the damage to an enemy, based on your damage and the enemy's defense
+    // EFFECTS: calculate the damage to an enemy, based on your damage and the
+    // enemy's defense
     public void calculateDamage(Entity enemy) {
         double playerTrueDamage = player.getAttack() - enemy.getDefense();
         double enemyTrueDamage = enemy.getAttack() - player.getDefense();
