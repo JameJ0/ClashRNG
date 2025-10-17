@@ -23,5 +23,7 @@ This project is of interest to me because I've always played video games my whol
 - As a user, I want to be able to see my health, mana level, and the list of items I currently own
 - As a user, I want to be able to add a dropped item on the ground to my inventory
 - As a user, I want to be able to remove an enemy from the play field when its health drops below 0
+- As a user, I want to be able to save my stats and game state (the level, the player, and enemies) to file
+- As a user, I want to be able to load my save from file (if I so choose)  
 
 
