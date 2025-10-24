@@ -4,7 +4,6 @@ import org.json.*;
 
 import persistence.Writable;
 
-import java.net.http.WebSocket;
 import java.util.*;
 
 public class GameState implements Writable{
