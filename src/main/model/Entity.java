@@ -1,9 +1,14 @@
 package model;
 
 // Represents an entity in the game, like the player or an enemy, for example.
-import java.util.ArrayList;
+import java.util.*;
 
-public class Entity {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
+public class Entity implements Writable{
     protected double health;
     protected double attack;
     protected double defense;
@@ -11,7 +16,7 @@ public class Entity {
     protected double speed;
     protected int loot;
 
-    protected ArrayList<Item> inventory;
+    protected List<Item> inventory;
 
     // EFFECTS: Creates an entity with an inventory and no coins (loot)
     public Entity() {
@@ -62,8 +67,66 @@ public class Entity {
         this.health = health;
     }
 
+    // MODIFIES: this
+    // EFFECTS: set the mana to a specifc number
+    public void setMana(double mana) {
+        this.mana = mana;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the speed to a specifc number
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the loot to a specifc number
+    public void setLoot(int loot) {
+        this.loot = loot;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the defense to a specifc number
+    public void setDefense(double defense) {
+        this.defense = defense;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the attack to a specifc number
+    public void setAttack(double attack) {
+        this.attack = attack;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the inventory of an entity
+    public void setInventory(List<Item> inventory) {
+        this.inventory = inventory;
+    }
+
     // EFFECTS: returns the list of items of the entity
-    public ArrayList<Item> getInventory() {
+    public List<Item> getInventory() {
         return inventory;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("health", health);
+        json.put("attack", attack);
+        json.put("defense", defense);
+        json.put("mana", mana);
+        json.put("speed", speed);
+        json.put("loot", loot);
+        json.put("inventory", inventoryToJson());
+        return json;
+    }
+
+    private JSONArray inventoryToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Item item : inventory) {
+            jsonArray.put(item.toJson());
+        }
+        return jsonArray;
+    }
+
 }

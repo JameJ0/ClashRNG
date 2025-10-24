@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // Representation of an item in the game, which can be placed in an inventory
 public class Item {
     private int weight;
@@ -32,5 +34,14 @@ public class Item {
 
     public String toString() {
         return getRarity() + " " + getName();
+    }
+
+    // EFFECTS: returns this item as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("weight", weight);
+        json.put("rarity", rarity);
+        return json;
     }
 }
