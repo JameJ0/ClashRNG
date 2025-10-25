@@ -1,4 +1,3 @@
-// modified from JsonSerializationDemo
 package ui;
 
 import java.io.FileNotFoundException;

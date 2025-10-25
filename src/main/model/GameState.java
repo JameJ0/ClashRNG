@@ -7,12 +7,13 @@ import persistence.Writable;
 import java.util.*;
 
 //represents the state of the game (list of enemies, the player)
-public class GameState implements Writable{
+public class GameState implements Writable {
     private Entity player;
     private List<Entity> enemies;
 
-    //EFFECTS: creates a new game with an empty enemies list
+    // EFFECTS: creates a new game with an empty enemies list
     public GameState() {
+        player = null;
         enemies = new ArrayList<>();
     }
 
@@ -39,7 +40,11 @@ public class GameState implements Writable{
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("player", player.toJson());
+        if (player != null) {
+            json.put("player", player.toJson());
+        } else {
+            json.put("player", JSONObject.NULL);
+        }
         json.put("enemies", enemiesToJson());
         return json;
     }

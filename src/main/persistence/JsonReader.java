@@ -1,4 +1,4 @@
-// modified from JsonSerializationDemo
+// adapted from JsonSerializationDemo
 package persistence;
 
 import model.*;
@@ -44,10 +44,11 @@ public class JsonReader {
     // EFFECTS: parses game from JSON object and returns it
     private GameState parseGameState(JSONObject jsonObject) {
         GameState gs = new GameState();
-        Entity player = parseEntity(jsonObject.getJSONObject("player"));
-        gs.setPlayer(player);
-        List<Entity> enemies = parseEntities(jsonObject.getJSONArray("enemies"));
-        gs.setEnemies(enemies);
+        if (jsonObject.has("player") && !jsonObject.isNull("player")) {
+            Entity player = parseEntity(jsonObject.getJSONObject("player"));
+            gs.setPlayer(player);
+        }
+        gs.setEnemies(parseEntities(jsonObject.getJSONArray("enemies")));
         return gs;
     }
 
@@ -100,7 +101,7 @@ public class JsonReader {
         return new Item(name, weight, rarity);
     }
 
-    //parses a jsonArray as a List of Entity
+    // parses a jsonArray as a List of Entity
     private List<Entity> parseEntities(JSONArray jsonArray) {
         List<Entity> entities = new ArrayList<>();
         for (Object obj : jsonArray) {

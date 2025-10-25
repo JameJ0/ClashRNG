@@ -1,4 +1,4 @@
-// modified from JsonSerializationDemo
+// adapted from JsonSerializationDemo
 package persistence;
 import model.GameState;
 import org.json.JSONObject;
