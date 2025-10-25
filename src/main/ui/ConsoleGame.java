@@ -8,7 +8,7 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-// The  essence of the game, all presented in the terminal.
+// The essence of the game, all presented in the terminal.
 public class ConsoleGame {
 
     private Scanner sc;
@@ -35,7 +35,7 @@ public class ConsoleGame {
             generateEnemies();
         }else{
             player = gameState.getPlayer();
-            enemies = gameState.getEnemies();
+            enemies = new ArrayList<>(gameState.getEnemies());
         }
         gameState.setPlayer(player);
         printStats(player);
@@ -269,7 +269,7 @@ public class ConsoleGame {
         }
     }
 
-    // EFFECTS: saves the workroom to file
+    // EFFECTS: saves the game to file
     private void saveGameState() {
         try {
             jsonWriter.open();
@@ -282,7 +282,7 @@ public class ConsoleGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads game from file
     private void loadGameState() {
         try {
             gameState = jsonReader.read();

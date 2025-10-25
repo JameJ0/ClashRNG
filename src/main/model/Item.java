@@ -1,9 +1,10 @@
 package model;
 
 import org.json.JSONObject;
+import persistence.Writable;
 
 // Representation of an item in the game, which can be placed in an inventory
-public class Item {
+public class Item implements Writable{
     private int weight;
     private String name;
     private String rarity;
@@ -17,17 +18,14 @@ public class Item {
         this.rarity = rarity;
     }
 
-    // EFFECTS: returns the name of the item
     public String getName() {
         return name;
     }
 
-    // EFFECTS: returns the weight of the item
     public int getWeight() {
         return weight;
     }
 
-    // EFFECTS: returns the rarity of the item
     public String getRarity() {
         return rarity;
     }
@@ -36,7 +34,7 @@ public class Item {
         return getRarity() + " " + getName();
     }
 
-    // EFFECTS: returns this item as a JSON object
+    @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);

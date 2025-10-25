@@ -7,14 +7,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.attribute.GroupPrincipal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.json.*;
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads game from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -23,7 +22,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads game from file and returns it;
     // throws IOException if an error occurs reading data from file
     public GameState read() throws IOException {
         String jsonData = readFile(source);
@@ -42,7 +41,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses game from JSON object and returns it
     private GameState parseGameState(JSONObject jsonObject) {
         GameState gs = new GameState();
         Entity player = parseEntity(jsonObject.getJSONObject("player"));
@@ -52,6 +51,7 @@ public class JsonReader {
         return gs;
     }
 
+    // EFFECTS: parses an entity based on its type
     private Entity parseEntity(JSONObject jsonObject) {
         Entity entity;
         String type = jsonObject.getString("type");
@@ -72,7 +72,6 @@ public class JsonReader {
                 entity = new Entity();
                 break;
         }
-
         entity.setHealth(jsonObject.getDouble("health"));
         entity.setAttack(jsonObject.getDouble("attack"));
         entity.setDefense(jsonObject.getDouble("defense"));
@@ -83,6 +82,7 @@ public class JsonReader {
         return entity;
     }
 
+    // parses the items in a jsonArray as a List
     private List<Item> parseInventory(JSONArray jsonArray) {
         List<Item> inventory = new ArrayList<>();
         for (Object obj : jsonArray) {
@@ -92,6 +92,7 @@ public class JsonReader {
         return inventory;
     }
 
+    // parses a jsonObject as an Item
     private Item parseItem(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int weight = jsonObject.getInt("weight");
@@ -99,6 +100,7 @@ public class JsonReader {
         return new Item(name, weight, rarity);
     }
 
+    //parses a jsonArray as a List of Entity
     private List<Entity> parseEntities(JSONArray jsonArray) {
         List<Entity> entities = new ArrayList<>();
         for (Object obj : jsonArray) {
