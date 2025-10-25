@@ -1,31 +1,49 @@
+// modified from JsonSerializationDemo
 package ui;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 // The  essence of the game, all presented in the terminal.
 public class ConsoleGame {
 
     private Scanner sc;
-    private ArrayList<Entity> enemies;
+    private List<Entity> enemies;
     private boolean gameOver;
     private Random rand;
     private Entity player;
 
+    private static final String JSON_STORE = "./data/gamestate.json";
+    private GameState gameState;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private boolean newGame;
+
     // EFFECTS: creates an instance of the game console ui application
-    public ConsoleGame() {
+    public ConsoleGame() throws FileNotFoundException {
+        gameState = new GameState();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         init();
         printWelcome();
-        roleSelect();
+        if (newGame) {
+            roleSelect();
+            generateEnemies();
+        }else{
+            player = gameState.getPlayer();
+            enemies = gameState.getEnemies();
+        }
+        gameState.setPlayer(player);
         printStats(player);
         pause();
         preLevel();
+        gameState.setEnemies(enemies);
+
         runGame();
-        if (gameOver) {
-            System.out.println("\nYou lost!\n");
-        } else {
-            System.out.println("\nYou won!\n");
-        }
     }
 
     // MODIFIES: this
@@ -35,6 +53,7 @@ public class ConsoleGame {
         enemies = new ArrayList<>();
         gameOver = false;
         rand = new Random();
+        newGame = true;
     }
 
     // EFFECTS: waits for the user to enter something, acting as a pause between
@@ -48,7 +67,6 @@ public class ConsoleGame {
     // EFFECTS: randomly generates 2-6 enemies, and prints ome information about the
     // mechanics of the game
     public void preLevel() {
-        generateEnemies();
         System.out.println("\n        Level 1-1 (console demo level)");
         System.out.println("-----------------------------------------------");
         System.out.println(
@@ -77,8 +95,15 @@ public class ConsoleGame {
     // EFFECTS: prints the main menu lines when the application initializes
     public void printWelcome() {
         System.out.println("\n\n\n\n\n\n\nWelcome to the game!");
-        System.out.println("Please select your class (type the corresponding letter in the paranthesis):");
-        System.out.println("\nKnight(k)  Mage(m)  Bandit(b)\n");
+        System.out.println("\nWould you like to load the previous game? Y/N");
+        String input = sc.next();
+        if (input.equalsIgnoreCase("y")) {
+            loadGameState();
+            newGame = false;
+        } else {
+            System.out.println("Please select your class (type the corresponding letter in the paranthesis):");
+            System.out.println("\nKnight(k)  Mage(m)  Bandit(b)\n");
+        }
     }
 
     // MODIFIES: this
@@ -125,7 +150,7 @@ public class ConsoleGame {
         System.out.println("\nYour HP: " + player.getHealth());
         System.out.println("Enemy HP: " + enemy.getHealth());
         System.out.println("\nWhat will you do?");
-        System.out.println("\nfight(f)  stats(s)  view inventory(i)\n");
+        System.out.println("\nfight(f)  info(i)  view inventory(v) save(s) quit(q)\n");
     }
 
     // MODIFIES: this
@@ -142,11 +167,18 @@ public class ConsoleGame {
                         calculateDamage(enemy);
                         picked = true;
                         break;
-                    case "s":
+                    case "i":
                         printStats(player);
                         break;
-                    case "i":
+                    case "v":
                         printInventory(player);
+                        break;
+                    case "s":
+                        saveGameState();
+                        break;
+                    case "q":
+                        System.out.println("quitting game...");
+                        System.exit(0);
                         break;
                     default:
                         System.out.println("\nPlease choose from the available options.\n");
@@ -230,7 +262,34 @@ public class ConsoleGame {
             battle(currentEnemy);
             enemies.remove(0);
         }
+        if (gameOver) {
+            System.out.println("\nYou lost!\n");
+        } else {
+            System.out.println("\nYou won!\n");
+        }
+    }
 
+    // EFFECTS: saves the workroom to file
+    private void saveGameState() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(gameState);
+            jsonWriter.close();
+            System.out.println("Saved previous game to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadGameState() {
+        try {
+            gameState = jsonReader.read();
+            System.out.println("Loaded previous game from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // Represents a playable character with high health and defense, but low attack
 public class Knight extends Entity {
 
@@ -13,7 +15,19 @@ public class Knight extends Entity {
         mana = 50;
     }
 
+    @Override
     public String toString() {
+        return "Knight";
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = super.toJson();
+        json.put("type", "Knight");
+        return json;
+    }
+
+    public String getType() {
         return "Knight";
     }
 }

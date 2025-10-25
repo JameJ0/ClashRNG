@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import persistence.Writable;
 
-public class Entity implements Writable{
+public class Entity implements Writable {
     protected double health;
     protected double attack;
     protected double defense;

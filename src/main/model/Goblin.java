@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // Represents an easy enemy entity  with random stats
 public class Goblin extends Entity {
 
@@ -14,7 +16,19 @@ public class Goblin extends Entity {
         loot = 5;
     }
 
+    @Override
     public String toString() {
+        return "Goblin";
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = super.toJson();
+        json.put("type", "Goblin");
+        return json;
+    }
+
+    public String getType() {
         return "Goblin";
     }
 

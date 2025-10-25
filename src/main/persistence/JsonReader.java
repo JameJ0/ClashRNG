@@ -1,4 +1,4 @@
-// Taken from JsonSerializationDemo
+// modified from JsonSerializationDemo
 package persistence;
 
 import model.*;
@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.attribute.GroupPrincipal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -52,7 +53,26 @@ public class JsonReader {
     }
 
     private Entity parseEntity(JSONObject jsonObject) {
-        Entity entity = new Entity();
+        Entity entity;
+        String type = jsonObject.getString("type");
+        switch (type) {
+            case "Goblin":
+                entity = new Goblin();
+                break;
+            case "Knight":
+                entity = new Knight();
+                break;
+            case "Mage":
+                entity = new Mage();
+                break;
+            case "Bandit":
+                entity = new Bandit();
+                break;
+            default:
+                entity = new Entity();
+                break;
+        }
+
         entity.setHealth(jsonObject.getDouble("health"));
         entity.setAttack(jsonObject.getDouble("attack"));
         entity.setDefense(jsonObject.getDouble("defense"));
