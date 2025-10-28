@@ -1,12 +1,12 @@
-// adapted from JsonSerializationDemo
 package persistence;
+
 import model.GameState;
 import org.json.JSONObject;
-
 
 import java.io.*;
 
 // Represents a writer that writes JSON representation of game to file
+// adapted from JsonSerializationDemo
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;

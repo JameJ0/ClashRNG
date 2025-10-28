@@ -32,7 +32,7 @@ public class ConsoleGame {
         if (newGame) {
             roleSelect();
             generateEnemies();
-        }else{
+        } else {
             player = gameState.getPlayer();
             enemies = new ArrayList<>(gameState.getEnemies());
         }

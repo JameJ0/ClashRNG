@@ -1,4 +1,3 @@
-// adapted from JsonSerializationDemo
 package persistence;
 
 import model.*;
@@ -14,6 +13,7 @@ import java.util.stream.Stream;
 import org.json.*;
 
 // Represents a reader that reads game from JSON data stored in file
+// adapted from JsonSerializationDemo
 public class JsonReader {
     private String source;
 
@@ -52,27 +52,27 @@ public class JsonReader {
         return gs;
     }
 
+    // EFFECTS: returns a newly instantiated Entity with the correct apparent type
+    private Entity parseEntitySwitch(String type) {
+        switch (type) {
+            case "Goblin":
+                return new Goblin();
+            case "Knight":
+                return new Knight();
+            case "Mage":
+                return new Mage();
+            case "Bandit":
+                return new Bandit();
+            default:
+                return new Entity();
+        }
+    }
+
     // EFFECTS: parses an entity based on its type
     private Entity parseEntity(JSONObject jsonObject) {
         Entity entity;
         String type = jsonObject.getString("type");
-        switch (type) {
-            case "Goblin":
-                entity = new Goblin();
-                break;
-            case "Knight":
-                entity = new Knight();
-                break;
-            case "Mage":
-                entity = new Mage();
-                break;
-            case "Bandit":
-                entity = new Bandit();
-                break;
-            default:
-                entity = new Entity();
-                break;
-        }
+        entity = parseEntitySwitch(type);
         entity.setHealth(jsonObject.getDouble("health"));
         entity.setAttack(jsonObject.getDouble("attack"));
         entity.setDefense(jsonObject.getDouble("defense"));

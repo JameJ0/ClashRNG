@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 // Representation of an item in the game, which can be placed in an inventory
-public class Item implements Writable{
+public class Item implements Writable {
     private int weight;
     private String name;
     private String rarity;

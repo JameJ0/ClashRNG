@@ -1,4 +1,3 @@
-// adapted from JsonSerializationDemo
 package persistence;
 
 import model.*;
@@ -9,7 +8,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JsonWriterTest{
+// adapted from JsonSerializationDemo
+class JsonWriterTest {
 
     @Test
     void testWriterInvalidFile() {
@@ -47,10 +47,8 @@ class JsonWriterTest{
             GameState gs = new GameState();
             Entity p = new Knight();
             gs.setPlayer(p);
-            Entity e1 = new Goblin();
-            Entity e2 = new Goblin();
-            gs.addEnemy(e1);
-            gs.addEnemy(e2);
+            gs.addEnemy(new Goblin());
+            gs.addEnemy(new Goblin());
 
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralGameState.json");
             writer.open();
@@ -68,7 +66,6 @@ class JsonWriterTest{
             List<Entity> enemies = gs.getEnemies();
             assertEquals(2, enemies.size());
             assertEquals(5, enemies.get(0).getLoot());
-
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }

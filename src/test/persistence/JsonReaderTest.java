@@ -1,4 +1,3 @@
-// adapted from JsonSerializationDemo
 package persistence;
 
 import model.*;
@@ -9,13 +8,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// adapted from JsonSerializationDemo
 class JsonReaderTest {
 
     @Test
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            GameState gs = reader.read();
+            reader.read();
             fail("IOException expected");
         } catch (IOException e) {
             // pass
