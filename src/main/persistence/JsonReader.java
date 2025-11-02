@@ -1,6 +1,7 @@
 package persistence;
 
 import model.*;
+import model.exceptions.TypeDoesNotExistException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -45,52 +46,50 @@ public class JsonReader {
     private GameState parseGameState(JSONObject jsonObject) {
         GameState gs = new GameState();
         if (jsonObject.has("player") && !jsonObject.isNull("player")) {
-            Entity player = parseEntity(jsonObject.getJSONObject("player"));
-            gs.setPlayer(player);
+            try {
+                gs.setPlayer(parseEntity(jsonObject.getJSONObject("player")));
+            } catch (TypeDoesNotExistException e) {
+                System.out.println("This is not a player");
+            }
         }
         gs.setEnemies(parseEntities(jsonObject.getJSONArray("enemies")));
         return gs;
     }
 
-    // EFFECTS: returns a newly instantiated Entity with the correct apparent type
-    private Entity parseEntitySwitch(String type) {
-        switch (type) {
-            case "Goblin":
-                return new Goblin();
-            case "Knight":
-                return new Knight();
-            case "Mage":
-                return new Mage();
-            case "Bandit":
-                return new Bandit();
-            default:
-                return new Entity();
-        }
-    }
-
-    // EFFECTS: parses an entity based on its type
-    private Entity parseEntity(JSONObject jsonObject) {
+    // EFFECTS: parses and instantiate an entity based on its type
+    private Entity parseEntity(JSONObject jsonObject) throws TypeDoesNotExistException {
         Entity entity;
         String type = jsonObject.getString("type");
-        entity = parseEntitySwitch(type);
-        entity.setHealth(jsonObject.getDouble("health"));
-        entity.setAttack(jsonObject.getDouble("attack"));
-        entity.setDefense(jsonObject.getDouble("defense"));
-        entity.setMana(jsonObject.getDouble("mana"));
-        entity.setSpeed(jsonObject.getDouble("speed"));
-        entity.setLoot(jsonObject.getInt("loot"));
-        entity.setInventory(parseInventory(jsonObject.getJSONArray("inventory")));
+        switch (type) {
+            case "Goblin":
+                entity = new Goblin();
+                break;
+            case "Knight":
+                entity = new Knight(jsonObject.getString("name"));
+                break;
+            case "Mage":
+                entity = new Mage(jsonObject.getString("name"));
+                break;
+            case "Bandit":
+                entity = new Bandit(jsonObject.getString("name"));
+                break;
+            default:
+                throw new TypeDoesNotExistException("The type " + type + " does not exist.");
+        }
+        parseInventoryToEntity(entity, jsonObject.getJSONArray("invenotory"));
         return entity;
     }
 
     // parses the items in a jsonArray as a List
-    private List<Item> parseInventory(JSONArray jsonArray) {
+    private void parseInventoryToEntity(Entity e, JSONArray jsonArray) {
         List<Item> inventory = new ArrayList<>();
         for (Object obj : jsonArray) {
             JSONObject jsonItem = (JSONObject) obj;
             inventory.add(parseItem(jsonItem));
         }
-        return inventory;
+        for (Item i : inventory) {
+            e.addToInventory(i);
+        }
     }
 
     // parses a jsonObject as an Item
@@ -106,7 +105,11 @@ public class JsonReader {
         List<Entity> entities = new ArrayList<>();
         for (Object obj : jsonArray) {
             JSONObject jsonEntity = (JSONObject) obj;
-            entities.add(parseEntity(jsonEntity));
+            try {
+                entities.add(parseEntity(jsonEntity));
+            } catch (TypeDoesNotExistException e) {
+                System.out.println("The type " + jsonEntity.getString("type") + " not exist");
+            }
         }
         return entities;
     }

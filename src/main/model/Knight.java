@@ -3,31 +3,22 @@ package model;
 import org.json.JSONObject;
 
 // Represents a playable character with high health and defense, but low attack
-public class Knight extends Entity {
+public class Knight extends Player {
 
     // EFFECTS: creates a Mage with specific stats for Mage
-    public Knight() {
-        super();
-        health = 20;
-        speed = 2;
-        defense = 3;
-        attack = 5;
-        mana = 50;
+    public Knight(String name) {
+        super(name, 20.0, 3.0, 5.0, 2.0, 50.0);
     }
 
     @Override
     public String toString() {
-        return "Knight";
+        return this.getClass().getSimpleName();
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject json = super.toJson();
-        json.put("type", "Knight");
+        json.put("type", toString());
         return json;
-    }
-
-    public String getType() {
-        return "Knight";
     }
 }

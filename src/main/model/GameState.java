@@ -33,10 +33,6 @@ public class GameState implements Writable {
         this.enemies = enemies;
     }
 
-    public void addEnemy(Entity enemy) {
-        enemies.add(enemy);
-    }
-
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

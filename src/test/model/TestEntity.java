@@ -20,7 +20,7 @@ public class TestEntity {
 
     @Test
     void testSetHealth() {
-        entity.setHealth(0);
+        entity.takeDamage(0);
         assertEquals(0, entity.getHealth());
     }
 

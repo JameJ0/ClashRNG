@@ -214,29 +214,12 @@ public class ConsoleGame {
     public void calculateDamage(Entity enemy) {
         double playerTrueDamage = player.getAttack() - enemy.getDefense();
         double enemyTrueDamage = enemy.getAttack() - player.getDefense();
-        enemy.setHealth(enemy.getHealth() - playerTrueDamage);
-        player.setHealth(player.getHealth() - enemyTrueDamage);
+        enemy.takeDamage(enemy.getHealth() - playerTrueDamage);
+        player.takeDamage(player.getHealth() - enemyTrueDamage);
         System.out.println("\nThe enemy took " + playerTrueDamage + " damage.");
         System.out.println("\nThe player took " + enemyTrueDamage + " damage.");
     }
 
-    // REQUIRES: n >= 0 && n <= 50
-    // EFFECTS: generate an Item based on a double which is an rng
-    public Item generateDrop(double n) {
-        String rarity;
-        if (n < 1) {
-            rarity = "Legendary";
-        } else if (n < 3) {
-            rarity = "Epic";
-        } else if (n < 10) {
-            rarity = "Rare";
-        } else if (n < 25) {
-            rarity = "Uncommon";
-        } else {
-            rarity = "Common";
-        }
-        return new Item("Item", 0, rarity);
-    }
 
     // EFFECTS: prints the inventory and wealth of an entity
     public void printInventory(Entity e) {
