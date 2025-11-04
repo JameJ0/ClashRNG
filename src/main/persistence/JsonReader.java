@@ -114,7 +114,7 @@ public class JsonReader {
     }
 
     // parses a jsonArray as a List of Entity
-    private List<Enemy> parseEnemies(JSONArray jsonArray) throws WrongEntityTypeException{
+    private List<Enemy> parseEnemies(JSONArray jsonArray) throws WrongEntityTypeException {
         List<Enemy> enemies = new ArrayList<>();
         for (Object obj : jsonArray) {
             JSONObject jsonEntity = (JSONObject) obj;

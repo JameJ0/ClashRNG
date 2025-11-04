@@ -1,6 +1,8 @@
 package persistence;
 
 import model.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -11,6 +13,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // adapted from JsonSerializationDemo
 class JsonWriterTest {
+
+    List<Enemy> enemies;
+
+    @BeforeEach
+    void runBefore() {
+        enemies = new ArrayList<>();
+        enemies.add(new Goblin());
+        enemies.add(new Goblin());
+    }
 
     @Test
     void testWriterInvalidFile() {
@@ -28,9 +39,6 @@ class JsonWriterTest {
         try {
             GameState gs = new GameState();
             Player p = new Knight("name");
-            List<Enemy> enemies = new ArrayList<>();
-            enemies.add(new Goblin());
-            enemies.add(new Goblin());
             gs.setPlayer(p);
             gs.setEnemies(enemies);
 
