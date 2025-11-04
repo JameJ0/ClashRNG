@@ -25,6 +25,7 @@ public class JsonReader {
 
     // EFFECTS: reads game from file and returns it;
     // throws IOException if an error occurs reading data from file
+    // throws WrongEntityTypeException if the types on file are wrong for the object
     public GameState read() throws IOException, WrongEntityTypeException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
@@ -50,6 +51,7 @@ public class JsonReader {
         return gs;
     }
 
+    // EFFECTS: parses player from JSONObject and returns it
     private Player parsePlayer(JSONObject jsonObject) throws WrongEntityTypeException {
         Player player;
         String type = jsonObject.getString("type");
@@ -90,11 +92,13 @@ public class JsonReader {
     private Item parseItem(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int weight = jsonObject.getInt("weight");
-        String rarity = jsonObject.getString("rarity");
+        String rarityString = jsonObject.getString("rarity");
+        Rarity rarity = Rarity.valueOf(rarityString.toUpperCase());
         return new Item(name, weight, rarity);
     }
 
     // EFFECTS: parses and instantiate an entity based on its type
+    // throws WrongEntityTypeException if the types on file are wrong for the object
     private Enemy parseEnemy(JSONObject jsonObject) throws WrongEntityTypeException {
         Enemy enemy;
         String type = jsonObject.getString("type");
@@ -113,7 +117,8 @@ public class JsonReader {
         return enemy;
     }
 
-    // parses a jsonArray as a List of Entity
+    // EFFECTS: parses a jsonArray as a List of Entity
+    // throws WrongEntityTypeException if the types on file are wrong for the object
     private List<Enemy> parseEnemies(JSONArray jsonArray) throws WrongEntityTypeException {
         List<Enemy> enemies = new ArrayList<>();
         for (Object obj : jsonArray) {

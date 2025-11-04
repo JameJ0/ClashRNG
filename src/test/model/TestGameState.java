@@ -22,12 +22,6 @@ public class TestGameState {
     }
 
     @Test
-    void testConstructor() {
-        assertNull(gs.getPlayer());
-        assertEquals(0, gs.getEnemies().size());
-    }
-
-    @Test
     void testSetPlayer() {
         gs.setPlayer(player);
         assertEquals(player, gs.getPlayer());

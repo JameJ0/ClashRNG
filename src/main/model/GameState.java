@@ -6,15 +6,13 @@ import persistence.Writable;
 
 import java.util.*;
 
-//represents the state of the game (list of enemies, the player)
+// represents the state of the game as a list of enemies and the player
 public class GameState implements Writable {
     private Player player;
     private List<Enemy> enemies;
 
-    // EFFECTS: creates a new game with an empty enemies list
+    // EFFECTS: creates a new game
     public GameState() {
-        player = null;
-        enemies = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -33,6 +31,7 @@ public class GameState implements Writable {
         this.enemies = enemies;
     }
 
+    // EFFECTS: returns the object as a JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -41,7 +40,7 @@ public class GameState implements Writable {
         return json;
     }
 
-    // EFFECTS: returns items in your inventory as a JSON array
+    // EFFECTS: returns the enemies as a JSON array
     private JSONArray enemiesToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Enemy enemy : enemies) {

@@ -3,8 +3,10 @@ package ui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
+
 import model.*;
 import model.exceptions.WrongEntityTypeException;
+
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -28,9 +30,6 @@ public class ConsoleGame {
     public ConsoleGame() throws FileNotFoundException {
         init();
         initGameState();
-        printPlayerStats();
-        pause();
-        gameIntro();
         runGame();
     }
 
@@ -54,8 +53,7 @@ public class ConsoleGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: randomly generates 2-6 enemies, and prints ome information about the
-    // mechanics of the game
+    // EFFECTS: prints ome information about the mechanics of the game
     public void gameIntro() {
         System.out.println("\n                     Level 1-1 (console demo level)");
         System.out.println("-------------------------------------------------------------------------------------");
@@ -70,7 +68,7 @@ public class ConsoleGame {
         pause();
     }
 
-    // EFFECTS: prints an entity's stats
+    // EFFECTS: prints the player's stats
     public void printPlayerStats() {
         System.out.println("\nHere are your stats:");
         System.out.println("------------------------------");
@@ -81,7 +79,9 @@ public class ConsoleGame {
         System.out.println("Health = " + player.getHealth() + "\n");
     }
 
-    // EFFECTS: prints the main menu lines when the application initializes
+    // MODIFIES: this
+    // EFFECTS: asks the user if they want to load a prev game. let the name and
+    // role select if not.
     public void initGameState() {
         System.out.println("\n\n\n\n\n\n\nWelcome to the game!");
         System.out.println("\nWould you like to load the previous game? Y/N\n");
@@ -97,6 +97,8 @@ public class ConsoleGame {
                     nameSelect();
                     roleSelect();
                     generateEnemies();
+                    printPlayerStats();
+                    gameIntro();
                     picked = true;
                     break;
                 default:
@@ -106,14 +108,15 @@ public class ConsoleGame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: asks the user for their name and store it in the field
     public void nameSelect() {
         System.out.println("\nWhat is your name, adventurer?\n");
         name = sc.next();
     }
 
     // MODIFIES: this
-    // EFFECTS: asks the user for an input and initialize a playable entity as the
-    // player
+    // EFFECTS: asks the user to choose a playable character
     @SuppressWarnings("methodlength")
     public void roleSelect() {
         System.out.println("\nPlease select your class (type the corresponding letter in the paranthesis):");
@@ -139,7 +142,7 @@ public class ConsoleGame {
                     break;
             }
         }
-        System.out.println("\nYou chose the " + player + " class! Here are your stats:\n");
+        System.out.println("\nYou chose the " + player + " class!\n");
     }
 
     // MODIFIES: this
@@ -170,8 +173,8 @@ public class ConsoleGame {
     public void battle(Enemy enemy) {
         while (player.getHealth() > 0 && enemy.getHealth() > 0) {
             boolean picked = false;
-            printBattleStatus(enemy);
             while (!picked) {
+                printBattleStatus(enemy);
                 String input = sc.next();
                 switch (input) {
                     case "f":
@@ -182,13 +185,13 @@ public class ConsoleGame {
                         printPlayerStats();
                         break;
                     case "v":
-                        printInventory(player);
+                        printInventory();
                         break;
                     case "s":
                         saveGameState();
                         break;
                     case "q":
-                        System.out.println("quitting game...");
+                        System.out.println("\nquitting game...\n");
                         System.exit(0);
                     default:
                         System.out.println("\nPlease choose from the available options.\n");
@@ -200,8 +203,7 @@ public class ConsoleGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: handles what should happen after an encounter (whether player/enemy
-    // has been defeated)
+    // EFFECTS: handles what should happen after defeating an enemy
     public void handleResults(Enemy enemy) {
         if (!gameOver) {
             System.out.println("\nYou've defeated " + enemy + "!");
@@ -219,7 +221,7 @@ public class ConsoleGame {
 
     // MODIFIES: this
     // EFFECTS: calculate the damage to an enemy, based on your damage and the
-    // enemy's defense
+    // enemy's defense. if the player's hp goes below 0, the game ends
     public void calculateDamage(Enemy enemy) {
         double playerTrueDamage = player.getAttack() - enemy.getDefense();
         double enemyTrueDamage = enemy.getAttack() - player.getDefense();
@@ -232,14 +234,14 @@ public class ConsoleGame {
         }
     }
 
-    // EFFECTS: prints the inventory and wealth of an entity
-    public void printInventory(Entity e) {
+    // EFFECTS: prints the inventory and wealth of the player
+    public void printInventory() {
         System.out.println("\nYou have " + player.getLoot() + " coins.\n");
-        if (e.getInventory().isEmpty()) {
+        if (player.getInventory().isEmpty()) {
             System.out.println("You have nothing in your inventory...\n");
         } else {
             System.out.println("Here's what's in your inventory:");
-            for (Item i : e.getInventory()) {
+            for (Item i : player.getInventory()) {
                 System.out.println(i);
             }
             System.out.println();
@@ -247,7 +249,7 @@ public class ConsoleGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: handles the game while player is in a level
+    // EFFECTS: handles the game while player is in a level/room
     public void runGame() {
         while (!enemies.isEmpty() && !gameOver) {
             Enemy currentEnemy = enemies.get(0);
@@ -262,6 +264,7 @@ public class ConsoleGame {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: saves the game to file
     private void saveGameState() {
         gameState.setEnemies(enemies);

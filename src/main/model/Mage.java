@@ -2,12 +2,12 @@ package model;
 
 import org.json.JSONObject;
 
-// Represents a playable character with low health but extremely high attack
+// Represents a mage playable character with low health but extremely high attack
 public class Mage extends Player {
 
     // EFFECTS: creates a Mage with specific stats for Mage
     public Mage(String name) {
-        super(name, 20.0, 5.0, 3.0, 2.0, 100.0);
+        super(name, 10.0, 6.0, 3.0, 2.0, 100.0);
     }
 
     @Override
@@ -15,6 +15,7 @@ public class Mage extends Player {
         return this.getClass().getSimpleName();
     }
 
+    // EFFECTS: returns the object as a JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = super.toJson();

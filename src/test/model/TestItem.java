@@ -15,18 +15,18 @@ public class TestItem {
 
     @BeforeEach
     void runBefore() {
-        item1 = new Item("Item", 1, "Common");
-        item2 = new Item("Item", 2, "Uncommon");
-        item3 = new Item("Item", 3, "Rare");
-        item4 = new Item("Item", 4, "Epic");
-        item5 = new Item("Item", 5, "Legendary");
+        item1 = new Item("Item", 1, Rarity.COMMON);
+        item2 = new Item("Item", 2, Rarity.UNCOMMON);
+        item3 = new Item("Item", 3, Rarity.RARE);
+        item4 = new Item("Item", 4, Rarity.EPIC);
+        item5 = new Item("Item", 5, Rarity.LEGENDARY);
     }
 
     @Test
     void testConstructor() {
         assertTrue(item1.getName().equals("Item"));
         assertEquals(1, item1.getWeight());
-        assertTrue(item1.getRarity().equals("Common"));
+        assertEquals(Rarity.COMMON,item1.getRarity());
     }
 
     @Test
@@ -43,6 +43,6 @@ public class TestItem {
         JSONObject jsItem = item1.toJson();
         assertEquals("Item", jsItem.getString("name"));
         assertEquals(1, jsItem.getInt("weight"));
-        assertEquals("Common", jsItem.getString("rarity"));
+        assertEquals("COMMON", jsItem.getString("rarity"));
     }
 }

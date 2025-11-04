@@ -16,8 +16,8 @@ public class TestMage {
 
     @Test
     void testConstructor() {
-        assertEquals(20, mage.getHealth());
-        assertEquals(5, mage.getAttack());
+        assertEquals(10, mage.getHealth());
+        assertEquals(6, mage.getAttack());
         assertEquals(3, mage.getDefense());
         assertEquals(2, mage.getSpeed());
         assertEquals(100, mage.getMana());

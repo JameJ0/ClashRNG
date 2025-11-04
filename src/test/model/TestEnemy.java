@@ -21,14 +21,14 @@ public class TestEnemy {
     @Test
     void testGenerateDrop() {
         Item i = enemy.generateDrop(0.5);
-        assertEquals("Legendary", i.getRarity());
+        assertEquals(Rarity.LEGENDARY, i.getRarity());
         i = enemy.generateDrop(2);
-        assertEquals("Epic", i.getRarity());
+        assertEquals(Rarity.EPIC, i.getRarity());
         i = enemy.generateDrop(4);
-        assertEquals("Rare", i.getRarity());
+        assertEquals(Rarity.RARE, i.getRarity());
         i = enemy.generateDrop(15);
-        assertEquals("Uncommon", i.getRarity());
+        assertEquals(Rarity.UNCOMMON, i.getRarity());
         i = enemy.generateDrop(30);
-        assertEquals("Common", i.getRarity());
+        assertEquals(Rarity.COMMON, i.getRarity());
     }  
 }

@@ -2,7 +2,7 @@ package model;
 
 import org.json.JSONObject;
 
-// Represents a playable character with high speed and low defense
+// represents a playable character with high speed and low defense
 public class Bandit extends Player {
 
     // EFFECTS: creates a Bandit with specific stats for Bandit
@@ -15,6 +15,7 @@ public class Bandit extends Player {
         return this.getClass().getSimpleName();
     }
 
+    // EFFECTS: returns the object as a JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = super.toJson();
