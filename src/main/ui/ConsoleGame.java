@@ -124,7 +124,7 @@ public class ConsoleGame {
         boolean picked = false;
         while (!picked) {
             input = sc.next();
-            switch (input) {
+            switch (input.toLowerCase()) {
                 case "k":
                     player = new Knight(name);
                     picked = true;
@@ -176,7 +176,7 @@ public class ConsoleGame {
             while (!picked) {
                 printBattleStatus(enemy);
                 String input = sc.next();
-                switch (input) {
+                switch (input.toLowerCase()) {
                     case "f":
                         calculateDamage(enemy);
                         picked = true;
