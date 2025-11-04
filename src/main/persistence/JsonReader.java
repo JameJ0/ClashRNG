@@ -77,6 +77,8 @@ public class JsonReader {
             player.addToInventory(i);
         }
         player.addLoot(jsonObject.getInt("loot"));
+        player.setHealth(jsonObject.getDouble("health"));
+        player.setMana(jsonObject.getInt("mana"));
         return player;
     }
 
@@ -113,6 +115,7 @@ public class JsonReader {
         for (Item i : inventory) {
             enemy.addToInventory(i);
         }
+        enemy.setHealth(jsonObject.getDouble("health"));
         return enemy;
     }
 

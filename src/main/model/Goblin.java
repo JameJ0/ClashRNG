@@ -7,7 +7,7 @@ public class Goblin extends Enemy {
 
     // EFFECTS: creates a Goblin with specific stats for Goblin
     public Goblin() {
-        super(5, 15, 4, 1, 2);
+        super(5, 15, 10, 1, 2);
     }
 
     @Override

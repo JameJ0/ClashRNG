@@ -27,14 +27,20 @@ public class Player extends Entity {
         JSONObject json = super.toJson();
         json.put("name", name);
         json.put("loot", loot);
+        json.put("mana", mana);
         return json;
     }
 
-    public int getLoot () {
+    public int getLoot() {
         return loot;
     }
 
-    public void addLoot (int loot) {
-        
+    public void addLoot(int loot) {
+        this.loot += loot;
     }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
 }

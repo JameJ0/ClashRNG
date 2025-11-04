@@ -60,10 +60,15 @@ public class Entity implements Writable {
         return inventory;
     }
 
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("inventory", inventoryToJson());
+        json.put("health", health);
         return json;
     }
 
