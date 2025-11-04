@@ -4,6 +4,7 @@ import model.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,32 +24,15 @@ class JsonWriterTest {
     }
 
     @Test
-    void testWriterEmptyWorkroom() {
-        try {
-            GameState gs = new GameState();
-            JsonWriter writer = new JsonWriter("./data/testWriterNewGame.json");
-            writer.open();
-            writer.write(gs);
-            writer.close();
-
-            JsonReader reader = new JsonReader("./data/testWriterNewGame.json");
-            gs = reader.read();
-
-            assertNull(gs.getPlayer());
-            assertEquals(0, gs.getEnemies().size());
-        } catch (IOException e) {
-            fail("Exception should not have been thrown");
-        }
-    }
-
-    @Test
     void testWriterGeneralWorkroom() {
         try {
             GameState gs = new GameState();
-            Entity p = new Knight();
+            Player p = new Knight("name");
+            List<Enemy> enemies = new ArrayList<>();
+            enemies.add(new Goblin());
+            enemies.add(new Goblin());
             gs.setPlayer(p);
-            gs.addEnemy(new Goblin());
-            gs.addEnemy(new Goblin());
+            gs.setEnemies(enemies);
 
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralGameState.json");
             writer.open();
@@ -63,10 +47,10 @@ class JsonWriterTest {
             assertEquals("Knight", p.toString());
             assertEquals(20, p.getHealth());
 
-            List<Entity> enemies = gs.getEnemies();
+            enemies = gs.getEnemies();
             assertEquals(2, enemies.size());
             assertEquals(5, enemies.get(0).getLoot());
-        } catch (IOException e) {
+        } catch (Exception e) {
             fail("Exception should not have been thrown");
         }
     }

@@ -1,6 +1,8 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 
 public class TestGoblin {
@@ -15,15 +17,15 @@ public class TestGoblin {
     @Test
     void testConstructor() {
         assertEquals(15, goblin.getHealth());
-        assertEquals(2, goblin.getSpeed());
-        assertEquals(1, goblin.getDefense());
         assertEquals(4, goblin.getAttack());
-        assertEquals(0, goblin.getMana());
-        assertEquals(5, goblin.getLoot());
+        assertEquals(1, goblin.getDefense());
+        assertEquals(2, goblin.getSpeed());
+        assertEquals("Goblin", goblin.toString());
     }
 
     @Test
-    void testToString() {
-        assertEquals("Goblin", goblin.toString());
+    void toJson() {
+        JSONObject jsGoblin = goblin.toJson();
+        assertEquals("Goblin", jsGoblin.getString("type"));
     }
 }

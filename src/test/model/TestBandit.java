@@ -1,6 +1,8 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 
 public class TestBandit {
@@ -9,21 +11,24 @@ public class TestBandit {
 
     @BeforeEach
     void runBefore() {
-        bandit = new Bandit();
+        bandit = new Bandit("name");
     }
 
     @Test
     void testConstructor() {
         assertEquals(15, bandit.getHealth());
-        assertEquals(5, bandit.getSpeed());
-        assertEquals(1, bandit.getDefense());
         assertEquals(10, bandit.getAttack());
+        assertEquals(1, bandit.getDefense());
+        assertEquals(6, bandit.getSpeed());
         assertEquals(50, bandit.getMana());
-        assertEquals(0, bandit.getLoot());
+        assertEquals("Bandit", bandit.toString());
     }
 
     @Test
-    void testToString() {
-        assertEquals("Bandit", bandit.toString());
+    void testJson() {
+        JSONObject jsBandit = bandit.toJson();
+        assertEquals("Bandit", jsBandit.getString("type"));
     }
+
+
 }

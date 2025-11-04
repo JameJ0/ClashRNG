@@ -3,15 +3,9 @@ package model;
 import org.json.JSONObject;
 
 public class Enemy extends Entity {
-    private int loot;
 
     public Enemy(int loot, double hp, double atk, double def, double spd) {
-        super(hp, atk, def, spd);
-        this.loot = loot;
-    }
-
-    public int getLoot() {
-        return loot;
+        super(loot, hp, atk, def, spd);
     }
 
     // EFFECTS: generate an Item based on a double which is an rng, and put into
@@ -30,11 +24,5 @@ public class Enemy extends Entity {
             rarity = "Common";
         }
         return new Item("Item", 2, rarity);
-    }
-
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = super.toJson();
-        return json;
     }
 }

@@ -1,0 +1,48 @@
+{
+    "enemies": [
+        {
+            "health": 15,
+            "loot": 5,
+            "inventory": [],
+            "type": "Goblin"
+        },
+        {
+            "health": 15,
+            "loot": 5,
+            "inventory": [],
+            "type": "Goblin"
+        },
+        {
+            "health": 15,
+            "loot": 5,
+            "inventory": [],
+            "type": "Goblin"
+        },
+        {
+            "health": 15,
+            "loot": 5,
+            "inventory": [],
+            "type": "Goblin"
+        },
+        {
+            "health": 15,
+            "loot": 5,
+            "inventory": [],
+            "type": "Goblin"
+        },
+        {
+            "health": 15,
+            "loot": 5,
+            "inventory": [],
+            "type": "Goblin"
+        }
+    ],
+    "player": {
+        "mana": 50,
+        "name": "a",
+        "health": 15,
+        "loot": 0,
+        "inventory": [],
+        "type": "Bandit"
+    }
+}

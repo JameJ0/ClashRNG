@@ -1,37 +1,48 @@
 {
     "enemies": [
         {
-            "health": 11,
+            "health": 15,
+            "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
             "health": 15,
+            "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
             "health": 15,
+            "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
             "health": 15,
+            "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
             "health": 15,
+            "loot": 5,
+            "inventory": [],
+            "type": "Goblin"
+        },
+        {
+            "health": 15,
+            "loot": 5,
             "inventory": [],
             "type": "Goblin"
         }
     ],
     "player": {
-        "mana": 50,
+        "mana": 100,
         "name": "a",
-        "health": 10,
+        "health": 20,
         "loot": 0,
         "inventory": [],
-        "type": "Knight"
+        "type": "Mage"
     }
 }

@@ -1,34 +1,30 @@
 {
     "enemies": [
         {
-            "mana": 0,
-            "defense": 1,
-            "attack": 4,
             "health": 15,
-            "loot": 5,
-            "inventory": [],
-            "type": "Goblin",
-            "speed": 2
+            "inventory": [{
+            "name": "Item",
+            "weight": 2,
+            "rarity": "Uncommon"
+        }],
+            "type": "Goblin"
         },
         {
-            "mana": 0,
-            "defense": 1,
-            "attack": 4,
-            "health": 15,
-            "loot": 5,
+            "health": 10,
             "inventory": [],
-            "type": "Goblin",
-            "speed": 2
+            "type": "Goblin"
         }
     ],
     "player": {
         "mana": 50,
-        "defense": 3,
-        "attack": 5,
-        "health": 20,
+        "name": "a",
+        "health": 10,
         "loot": 0,
-        "inventory": [],
-        "type": "Knight",
-        "speed": 2
+        "inventory": [{
+            "name": "Item",
+            "weight": 2,
+            "rarity": "Uncommon"
+        }],
+        "type": "Knight"
     }
 }

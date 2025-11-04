@@ -1,7 +1,7 @@
 package persistence;
 
 import model.*;
-import model.exceptions.TypeDoesNotExistException;
+import model.exceptions.WrongEntityTypeException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,7 +25,7 @@ public class JsonReader {
 
     // EFFECTS: reads game from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public GameState read() throws IOException {
+    public GameState read() throws IOException, WrongEntityTypeException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseGameState(jsonObject);
@@ -43,20 +43,14 @@ public class JsonReader {
     }
 
     // EFFECTS: parses game from JSON object and returns it
-    private GameState parseGameState(JSONObject jsonObject) {
+    private GameState parseGameState(JSONObject jsonObject) throws WrongEntityTypeException {
         GameState gs = new GameState();
-        if (jsonObject.has("player") && !jsonObject.isNull("player")) {
-            try {
-                gs.setPlayer(parsePlayer(jsonObject.getJSONObject("player")));
-            } catch (TypeDoesNotExistException e) {
-                System.out.println("This is not a player");
-            }
-        }
+        gs.setPlayer(parsePlayer(jsonObject.getJSONObject("player")));
         gs.setEnemies(parseEnemies(jsonObject.getJSONArray("enemies")));
         return gs;
     }
 
-    private Player parsePlayer(JSONObject jsonObject) throws TypeDoesNotExistException {
+    private Player parsePlayer(JSONObject jsonObject) throws WrongEntityTypeException {
         Player player;
         String type = jsonObject.getString("type");
         switch (type) {
@@ -70,7 +64,7 @@ public class JsonReader {
                 player = new Bandit(jsonObject.getString("name"));
                 break;
             default:
-                throw new TypeDoesNotExistException("The type " + type + " does not exist.");
+                throw new WrongEntityTypeException("The type " + type + " does not exist.");
         }
         List<Item> inventory = parseInventory(jsonObject.getJSONArray("inventory"));
         for (Item i : inventory) {
@@ -101,7 +95,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses and instantiate an entity based on its type
-    private Enemy parseEnemy(JSONObject jsonObject) throws TypeDoesNotExistException {
+    private Enemy parseEnemy(JSONObject jsonObject) throws WrongEntityTypeException {
         Enemy enemy;
         String type = jsonObject.getString("type");
         switch (type) {
@@ -109,7 +103,7 @@ public class JsonReader {
                 enemy = new Goblin();
                 break;
             default:
-                throw new TypeDoesNotExistException("The type " + type + " does not exist.");
+                throw new WrongEntityTypeException("The type " + type + " does not exist.");
         }
         List<Item> inventory = parseInventory(jsonObject.getJSONArray("inventory"));
         for (Item i : inventory) {
@@ -120,15 +114,11 @@ public class JsonReader {
     }
 
     // parses a jsonArray as a List of Entity
-    private List<Enemy> parseEnemies(JSONArray jsonArray) {
+    private List<Enemy> parseEnemies(JSONArray jsonArray) throws WrongEntityTypeException{
         List<Enemy> enemies = new ArrayList<>();
         for (Object obj : jsonArray) {
             JSONObject jsonEntity = (JSONObject) obj;
-            try {
-                enemies.add(parseEnemy(jsonEntity));
-            } catch (TypeDoesNotExistException e) {
-                System.out.println("The type " + jsonEntity.getString("type") + " not exist");
-            }
+            enemies.add(parseEnemy(jsonEntity));
         }
         return enemies;
     }

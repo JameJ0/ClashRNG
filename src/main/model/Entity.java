@@ -13,16 +13,22 @@ public class Entity implements Writable {
     private double attack;
     private double defense;
     private double speed;
+    private int loot;
 
     private List<Item> inventory;
 
-    // EFFECTS: Creates an entity with an inventory and no coins (loot)
-    public Entity(double hp, double atk, double def, double spd) {
+    // EFFECTS: Creates an entity with an empty inventory 
+    public Entity(int loot, double hp, double atk, double def, double spd) {
         health = hp;
         attack = atk;
         defense = def;
         speed = spd;
+        this.loot = loot;
         inventory = new ArrayList<>();
+    }
+
+    public void addLoot(int loot) {
+        this.loot += loot;
     }
 
     public double getHealth() {
@@ -39,6 +45,10 @@ public class Entity implements Writable {
 
     public double getSpeed() {
         return speed;
+    }
+
+    public int getLoot() {
+        return loot;
     }
 
     public void addToInventory(Item i) {
@@ -69,10 +79,11 @@ public class Entity implements Writable {
         JSONObject json = new JSONObject();
         json.put("inventory", inventoryToJson());
         json.put("health", health);
+        json.put("loot", loot);
         return json;
     }
 
-    private JSONArray inventoryToJson() {
+    public JSONArray inventoryToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Item item : inventory) {
             jsonArray.put(item.toJson());

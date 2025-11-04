@@ -36,11 +36,7 @@ public class GameState implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        if (player != null) {
-            json.put("player", player.toJson());
-        } else {
-            json.put("player", JSONObject.NULL);
-        }
+        json.put("player", player.toJson());
         json.put("enemies", enemiesToJson());
         return json;
     }

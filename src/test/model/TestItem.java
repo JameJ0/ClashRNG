@@ -1,6 +1,8 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 
 public class TestItem {
@@ -14,10 +16,10 @@ public class TestItem {
     @BeforeEach
     void runBefore() {
         item1 = new Item("Item", 1, "Common");
-        item2 = new Item("Item", 1, "Uncommon");
-        item3 = new Item("Item", 1, "Rare");
-        item4 = new Item("Item", 1, "Epic");
-        item5 = new Item("Item", 1, "Legendary");
+        item2 = new Item("Item", 2, "Uncommon");
+        item3 = new Item("Item", 3, "Rare");
+        item4 = new Item("Item", 4, "Epic");
+        item5 = new Item("Item", 5, "Legendary");
     }
 
     @Test
@@ -34,5 +36,13 @@ public class TestItem {
         assertTrue(item3.toString().equals("Rare Item"));
         assertTrue(item4.toString().equals("Epic Item"));
         assertTrue(item5.toString().equals("Legendary Item"));
+    }
+
+    @Test
+    void testJson() {
+        JSONObject jsItem = item1.toJson();
+        assertEquals("Item", jsItem.getString("name"));
+        assertEquals(1, jsItem.getInt("weight"));
+        assertEquals("Common", jsItem.getString("rarity"));
     }
 }

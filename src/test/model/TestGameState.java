@@ -1,0 +1,58 @@
+package model;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.*;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.junit.jupiter.api.*;
+
+public class TestGameState {
+
+    GameState gs;
+    Player player;
+    List<Enemy> enemies;
+
+    @BeforeEach
+    void runBefore() {
+        gs = new GameState();
+        player = new Player("name", 1, 2, 3, 4, 5);
+        enemies = new ArrayList<>();
+    }
+
+    @Test
+    void testConstructor() {
+        assertNull(gs.getPlayer());
+        assertEquals(0, gs.getEnemies().size());
+    }
+
+    @Test
+    void testSetPlayer() {
+        gs.setPlayer(player);
+        assertEquals(player, gs.getPlayer());
+    }
+
+    @Test
+    void testSetEnemies() {
+        enemies.add(new Goblin());
+        enemies.add(new Goblin());
+        gs.setEnemies(enemies);
+        assertEquals(2, gs.getEnemies().size());
+    }
+
+    @Test
+    void testJson() {
+        enemies.add(new Goblin());
+        enemies.add(new Goblin());
+        enemies.add(new Goblin());
+        gs.setEnemies(enemies);
+        gs.setPlayer(player);
+        JSONObject jsgs = gs.toJson();
+        JSONArray jsEnemies = jsgs.getJSONArray("enemies");
+        assertEquals(3, jsEnemies.length());
+        JSONObject playerFromJson = jsgs.getJSONObject("player");
+        assertEquals("name", playerFromJson.getString("name"));
+        assertEquals(5, playerFromJson.getInt("mana"));
+    }
+}

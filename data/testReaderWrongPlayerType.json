@@ -1,0 +1,22 @@
+{
+    "enemies": [
+        {
+            "health": 15,
+            "inventory": [],
+            "type": "Goblin"
+        },
+        {
+            "health": 10,
+            "inventory": [],
+            "type": "Goblin"
+        }
+    ],
+    "player": {
+        "mana": 50,
+        "name": "a",
+        "health": 10,
+        "loot": 0,
+        "inventory": [],
+        "type": "Enemy"
+    }
+}

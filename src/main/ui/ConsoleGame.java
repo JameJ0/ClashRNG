@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import model.*;
+import model.exceptions.WrongEntityTypeException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -63,7 +64,7 @@ public class ConsoleGame {
         System.out.println("Fight through the enemies, and perhaps even earn loot and drops along the way.");
         System.out.println(
                 "Be careful. once your health drops to 0, you lose. You will not keep your items in your next run.");
-        System.out.println("Good luck, have fun!!\n");
+        System.out.println("Good luck " + name + ", and have fun!!\n");
         System.out.println(
                 "(This is just an oversimplified and modified version of my vision of the game, for Phase 1.)");
         pause();
@@ -285,6 +286,8 @@ public class ConsoleGame {
             System.out.println("\nLoaded previous game from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("\nUnable to read from file: " + JSON_STORE);
+        } catch (WrongEntityTypeException e) {
+            System.out.println("\nentity type mismatch");
         }
     }
 
