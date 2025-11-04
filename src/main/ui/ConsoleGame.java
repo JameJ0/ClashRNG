@@ -11,37 +11,25 @@ import persistence.JsonWriter;
 public class ConsoleGame {
 
     private Scanner sc;
-    private List<Entity> enemies;
+    private List<Enemy> enemies;
     private boolean gameOver;
     private Random rand;
-    private Entity player;
+    private Player player;
+    private String input;
+    private String name;
 
     private static final String JSON_STORE = "./data/gamestate.json";
     private GameState gameState;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
-    private boolean newGame;
 
     // EFFECTS: creates an instance of the game console ui application
     public ConsoleGame() throws FileNotFoundException {
-        gameState = new GameState();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
         init();
-        printWelcome();
-        if (newGame) {
-            roleSelect();
-            generateEnemies();
-        } else {
-            player = gameState.getPlayer();
-            enemies = new ArrayList<>(gameState.getEnemies());
-        }
-        gameState.setPlayer(player);
-        printStats(player);
+        initGameState();
+        printPlayerStats();
         pause();
-        preLevel();
-        gameState.setEnemies(enemies);
-
+        gameIntro();
         runGame();
     }
 
@@ -52,7 +40,9 @@ public class ConsoleGame {
         enemies = new ArrayList<>();
         gameOver = false;
         rand = new Random();
-        newGame = true;
+        gameState = new GameState();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // EFFECTS: waits for the user to enter something, acting as a pause between
@@ -65,7 +55,7 @@ public class ConsoleGame {
     // MODIFIES: this
     // EFFECTS: randomly generates 2-6 enemies, and prints ome information about the
     // mechanics of the game
-    public void preLevel() {
+    public void gameIntro() {
         System.out.println("\n        Level 1-1 (console demo level)");
         System.out.println("-----------------------------------------------");
         System.out.println(
@@ -80,49 +70,66 @@ public class ConsoleGame {
     }
 
     // EFFECTS: prints an entity's stats
-    public void printStats(Entity e) {
-        System.out.println();
-        System.out.println("Attack = " + e.getAttack());
-        System.out.println("Defense = " + e.getDefense());
-        System.out.println("Speed = " + e.getSpeed());
-        System.out.println("Mana = " + e.getMana());
-        System.out.println("Health = " + e.getHealth());
-        System.out.println();
-
+    public void printPlayerStats() {
+        System.out.println("\nHere are your stats:");
+        System.out.println("------------------------------");
+        System.out.println("Attack = " + player.getAttack());
+        System.out.println("Defense = " + player.getDefense());
+        System.out.println("Speed = " + player.getSpeed());
+        System.out.println("Mana = " + player.getMana());
+        System.out.println("Health = " + player.getHealth() + "\n");
     }
 
     // EFFECTS: prints the main menu lines when the application initializes
-    public void printWelcome() {
+    public void initGameState() {
         System.out.println("\n\n\n\n\n\n\nWelcome to the game!");
         System.out.println("\nWould you like to load the previous game? Y/N");
-        String input = sc.next();
-        if (input.equalsIgnoreCase("y")) {
-            loadGameState();
-            newGame = false;
-        } else {
-            System.out.println("Please select your class (type the corresponding letter in the paranthesis):");
-            System.out.println("\nKnight(k)  Mage(m)  Bandit(b)\n");
+        input = sc.next();
+        boolean picked = false;
+        while (!picked) {
+            switch (input.toLowerCase()) {
+                case "y":
+                    loadGameState();
+                    picked = true;
+                    break;
+                case "n":
+                    nameSelect();
+                    roleSelect();
+                    generateEnemies();
+                    picked = true;
+                    break;
+                default:
+                    System.out.println("Please pick from the available options");
+                    break;
+            }
         }
+    }
+
+    public void nameSelect() {
+        System.out.println("\nWhat is your name, adventurer?\n");
+        name = sc.next();
     }
 
     // MODIFIES: this
     // EFFECTS: asks the user for an input and initialize a playable entity as the
     // player
     public void roleSelect() {
+        System.out.println("Please select your class (type the corresponding letter in the paranthesis):");
+        System.out.println("\nKnight(k)  Mage(m)  Bandit(b)\n");
         boolean picked = false;
         while (!picked) {
-            String input = sc.next();
+            input = sc.next();
             switch (input) {
                 case "k":
-                    player = new Knight();
+                    player = new Knight(name);
                     picked = true;
                     break;
                 case "m":
-                    player = new Mage();
+                    player = new Mage(name);
                     picked = true;
                     break;
                 case "b":
-                    player = new Bandit();
+                    player = new Bandit(name);
                     picked = true;
                     break;
                 default:
@@ -139,6 +146,8 @@ public class ConsoleGame {
     public void generateEnemies() {
         int randNum = rand.nextInt(5) + 2;
         for (int i = 0; i < randNum; i++) {
+            Enemy goblin = new Goblin();
+            goblin.generateDrop(rand.nextDouble() * 100);
             enemies.add(new Goblin());
         }
         System.out.println("There are " + enemies.size() + " enemie(s) in this room.");
@@ -155,7 +164,7 @@ public class ConsoleGame {
     // MODIFIES: this
     // EFFECTS: during enemy encounter take in user input, then do something based
     // on that input.
-    public void battle(Entity enemy) {
+    public void battle(Enemy enemy) {
         while (player.getHealth() > 0 && enemy.getHealth() > 0) {
             boolean picked = false;
             printBattleStatus(enemy);
@@ -167,7 +176,7 @@ public class ConsoleGame {
                         picked = true;
                         break;
                     case "i":
-                        printStats(player);
+                        printPlayerStats();
                         break;
                     case "v":
                         printInventory(player);
@@ -191,15 +200,15 @@ public class ConsoleGame {
     // MODIFIES: this
     // EFFECTS: handles what should happen after an encounter (whether player/enemy
     // has been defeated)
-    public void handleResults(Entity enemy) {
+    public void handleResults(Enemy enemy) {
         if (player.getHealth() < 0) {
             gameOver = true;
         } else {
             System.out.println("\nYou've defeated " + enemy + "!");
             player.addLoot(enemy.getLoot());
-            double rng = 100 * Math.random();
+            double rng = 100 * rand.nextDouble();
             if (rng < 50) {
-                Item drop = generateDrop(rng);
+                Item drop = enemy.generateDrop(rng);
                 player.getInventory().add(drop);
                 System.out.println("You picked up a " + drop + "!");
             } else {
@@ -211,7 +220,7 @@ public class ConsoleGame {
     // MODIFIES: this
     // EFFECTS: calculate the damage to an enemy, based on your damage and the
     // enemy's defense
-    public void calculateDamage(Entity enemy) {
+    public void calculateDamage(Enemy enemy) {
         double playerTrueDamage = player.getAttack() - enemy.getDefense();
         double enemyTrueDamage = enemy.getAttack() - player.getDefense();
         enemy.takeDamage(enemy.getHealth() - playerTrueDamage);
@@ -219,7 +228,6 @@ public class ConsoleGame {
         System.out.println("\nThe enemy took " + playerTrueDamage + " damage.");
         System.out.println("\nThe player took " + enemyTrueDamage + " damage.");
     }
-
 
     // EFFECTS: prints the inventory and wealth of an entity
     public void printInventory(Entity e) {
@@ -239,7 +247,7 @@ public class ConsoleGame {
     // EFFECTS: handles the game while player is in a level
     public void runGame() {
         while (!enemies.isEmpty() && !gameOver) {
-            Entity currentEnemy = enemies.get(0);
+            Enemy currentEnemy = enemies.get(0);
             System.out.println("\nYou've encountered a " + currentEnemy + "!");
             battle(currentEnemy);
             enemies.remove(0);
@@ -253,6 +261,8 @@ public class ConsoleGame {
 
     // EFFECTS: saves the game to file
     private void saveGameState() {
+        gameState.setEnemies(enemies);
+        gameState.setPlayer(player);
         try {
             jsonWriter.open();
             jsonWriter.write(gameState);
@@ -268,6 +278,8 @@ public class ConsoleGame {
     private void loadGameState() {
         try {
             gameState = jsonReader.read();
+            player = gameState.getPlayer();
+            enemies = new ArrayList<>(gameState.getEnemies());
             System.out.println("Loaded previous game from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);

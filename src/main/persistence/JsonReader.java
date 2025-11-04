@@ -47,49 +47,47 @@ public class JsonReader {
         GameState gs = new GameState();
         if (jsonObject.has("player") && !jsonObject.isNull("player")) {
             try {
-                gs.setPlayer(parseEntity(jsonObject.getJSONObject("player")));
+                gs.setPlayer(parsePlayer(jsonObject.getJSONObject("player")));
             } catch (TypeDoesNotExistException e) {
                 System.out.println("This is not a player");
             }
         }
-        gs.setEnemies(parseEntities(jsonObject.getJSONArray("enemies")));
+        gs.setEnemies(parseEnemies(jsonObject.getJSONArray("enemies")));
         return gs;
     }
 
-    // EFFECTS: parses and instantiate an entity based on its type
-    private Entity parseEntity(JSONObject jsonObject) throws TypeDoesNotExistException {
-        Entity entity;
+    private Player parsePlayer(JSONObject jsonObject) throws TypeDoesNotExistException {
+        Player player;
         String type = jsonObject.getString("type");
         switch (type) {
-            case "Goblin":
-                entity = new Goblin();
-                break;
             case "Knight":
-                entity = new Knight(jsonObject.getString("name"));
+                player = new Knight(jsonObject.getString("name"));
                 break;
             case "Mage":
-                entity = new Mage(jsonObject.getString("name"));
+                player = new Mage(jsonObject.getString("name"));
                 break;
             case "Bandit":
-                entity = new Bandit(jsonObject.getString("name"));
+                player = new Bandit(jsonObject.getString("name"));
                 break;
             default:
                 throw new TypeDoesNotExistException("The type " + type + " does not exist.");
         }
-        parseInventoryToEntity(entity, jsonObject.getJSONArray("invenotory"));
-        return entity;
+        List<Item> inventory = parseInventory(jsonObject.getJSONArray("inventory"));
+        for (Item i : inventory) {
+            player.addToInventory(i);
+        }
+        player.addLoot(jsonObject.getInt("loot"));
+        return player;
     }
 
     // parses the items in a jsonArray as a List
-    private void parseInventoryToEntity(Entity e, JSONArray jsonArray) {
+    private List<Item> parseInventory(JSONArray jsonArray) {
         List<Item> inventory = new ArrayList<>();
         for (Object obj : jsonArray) {
             JSONObject jsonItem = (JSONObject) obj;
             inventory.add(parseItem(jsonItem));
         }
-        for (Item i : inventory) {
-            e.addToInventory(i);
-        }
+        return inventory;
     }
 
     // parses a jsonObject as an Item
@@ -100,17 +98,35 @@ public class JsonReader {
         return new Item(name, weight, rarity);
     }
 
+    // EFFECTS: parses and instantiate an entity based on its type
+    private Enemy parseEnemy(JSONObject jsonObject) throws TypeDoesNotExistException {
+        Enemy enemy;
+        String type = jsonObject.getString("type");
+        switch (type) {
+            case "Goblin":
+                enemy = new Goblin();
+                break;
+            default:
+                throw new TypeDoesNotExistException("The type " + type + " does not exist.");
+        }
+        List<Item> inventory = parseInventory(jsonObject.getJSONArray("inventory"));
+        for (Item i : inventory) {
+            enemy.addToInventory(i);
+        }
+        return enemy;
+    }
+
     // parses a jsonArray as a List of Entity
-    private List<Entity> parseEntities(JSONArray jsonArray) {
-        List<Entity> entities = new ArrayList<>();
+    private List<Enemy> parseEnemies(JSONArray jsonArray) {
+        List<Enemy> enemies = new ArrayList<>();
         for (Object obj : jsonArray) {
             JSONObject jsonEntity = (JSONObject) obj;
             try {
-                entities.add(parseEntity(jsonEntity));
+                enemies.add(parseEnemy(jsonEntity));
             } catch (TypeDoesNotExistException e) {
                 System.out.println("The type " + jsonEntity.getString("type") + " not exist");
             }
         }
-        return entities;
+        return enemies;
     }
 }

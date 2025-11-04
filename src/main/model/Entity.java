@@ -63,10 +63,6 @@ public class Entity implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("health", health);
-        json.put("attack", attack);
-        json.put("defense", defense);
-        json.put("speed", speed);
         json.put("inventory", inventoryToJson());
         return json;
     }

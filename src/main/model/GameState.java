@@ -8,8 +8,8 @@ import java.util.*;
 
 //represents the state of the game (list of enemies, the player)
 public class GameState implements Writable {
-    private Entity player;
-    private List<Entity> enemies;
+    private Player player;
+    private List<Enemy> enemies;
 
     // EFFECTS: creates a new game with an empty enemies list
     public GameState() {
@@ -17,19 +17,19 @@ public class GameState implements Writable {
         enemies = new ArrayList<>();
     }
 
-    public Entity getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
-    public List<Entity> getEnemies() {
+    public List<Enemy> getEnemies() {
         return Collections.unmodifiableList(enemies);
     }
 
-    public void setPlayer(Entity player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
-    public void setEnemies(List<Entity> enemies) {
+    public void setEnemies(List<Enemy> enemies) {
         this.enemies = enemies;
     }
 
@@ -48,7 +48,7 @@ public class GameState implements Writable {
     // EFFECTS: returns items in your inventory as a JSON array
     private JSONArray enemiesToJson() {
         JSONArray jsonArray = new JSONArray();
-        for (Entity enemy : enemies) {
+        for (Enemy enemy : enemies) {
             jsonArray.put(enemy.toJson());
         }
         return jsonArray;

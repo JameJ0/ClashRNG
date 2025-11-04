@@ -16,7 +16,7 @@ public class Enemy extends Entity {
 
     // EFFECTS: generate an Item based on a double which is an rng, and put into
     // inventory
-    public void generateDrop(double randNum) {
+    public Item generateDrop(double randNum) {
         String rarity;
         if (randNum < 1) {
             rarity = "Legendary";
@@ -26,20 +26,15 @@ public class Enemy extends Entity {
             rarity = "Rare";
         } else if (randNum < 20) {
             rarity = "Uncommon";
-        } else if (randNum < 50) {
-            rarity = "Common";
         } else {
-            rarity = "no drop";
+            rarity = "Common";
         }
-        if (!rarity.equals("no drop")) {
-            this.getInventory().add(new Item("Item", 2, rarity));
-        }
+        return new Item("Item", 2, rarity);
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject json = super.toJson();
-        json.put("loot", loot);
         return json;
     }
 }
