@@ -26,6 +26,8 @@ public class ConsoleGame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    private GamePanel gp;
+
     // EFFECTS: creates an instance of the game console ui application
     public ConsoleGame() throws FileNotFoundException {
         init();
@@ -36,6 +38,7 @@ public class ConsoleGame {
     // MODIFIES: this
     // EFFECTS: initializes the application with the starting values
     public void init() {
+        gp = new GamePanel(gameState);
         sc = new Scanner(System.in);
         enemies = new ArrayList<>();
         gameOver = false;
