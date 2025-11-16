@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
+import javax.swing.JFrame;
+
 import model.*;
 import model.exceptions.WrongEntityTypeException;
 
@@ -11,7 +13,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 // The essence of the game, all presented in the terminal.
-public class ConsoleGame {
+public class ConsoleGame extends JFrame{
 
     private Scanner sc;
     private List<Enemy> enemies;
@@ -21,15 +23,19 @@ public class ConsoleGame {
     private String input;
     private String name;
 
+
     private static final String JSON_STORE = "./data/gamestate.json";
-    private GameState gameState;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
     private GamePanel gp;
+    private GameState gameState;
 
     // EFFECTS: creates an instance of the game console ui application
     public ConsoleGame() throws FileNotFoundException {
+        super("test");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setUndecorated(false);
         init();
         initGameState();
         runGame();
@@ -41,6 +47,8 @@ public class ConsoleGame {
         gp = new GamePanel(gameState);
         sc = new Scanner(System.in);
         enemies = new ArrayList<>();
+        add(gp);
+        setVisible(true);
         gameOver = false;
         rand = new Random();
         gameState = new GameState();

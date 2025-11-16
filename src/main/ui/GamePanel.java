@@ -13,7 +13,7 @@ import model.*;
 // The panel in which the game is rendered
 public class GamePanel extends JPanel{
     private GameState gs;
-    private BufferedImage butterfly;
+    private Image test;
 
     public GamePanel(GameState gs) {
         setPreferredSize(new Dimension(800, 600));
@@ -24,7 +24,7 @@ public class GamePanel extends JPanel{
 
     public void loadImages() {
         try {
-            butterfly = ImageIO.read(new File("/res/images/butterfly.jpg"));
+            test = ImageIO.read(new File("/res/images/butterfly.jpg"));
         } catch (IOException e) {
             System.out.println("The path is wrong");
         }
@@ -35,7 +35,7 @@ public class GamePanel extends JPanel{
     }
 
     public void drawPlayer(Graphics g) {
-        g.drawImage(butterfly, 0, 0, this);
+        g.drawImage(test, 0, 0, this);
     }
     
 }
