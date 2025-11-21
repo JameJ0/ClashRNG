@@ -26,7 +26,6 @@ public class ConsoleGame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    private GamePanel gp;
     private GameState gameState;
 
     // EFFECTS: creates an instance of the game console ui application
