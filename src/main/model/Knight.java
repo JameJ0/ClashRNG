@@ -40,7 +40,7 @@ public class Knight extends Player {
         return json;
     }
 
-    // EFFECTS: returns the bandit's sprite
+    // EFFECTS: returns the knight's sprite
     @Override
     public Image getImage() {
         return sprite;

@@ -17,7 +17,7 @@ public class TestGameState {
     @BeforeEach
     void runBefore() {
         gs = new GameState();
-        player = new Player("name", 1, 2, 3, 4, 5);
+        player = new Knight("name");
         enemies = new ArrayList<>();
     }
 

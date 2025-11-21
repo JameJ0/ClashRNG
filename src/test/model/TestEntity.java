@@ -13,7 +13,7 @@ public class TestEntity {
 
     @BeforeEach
     void runBefore() {
-        entity = new Entity(0, 1, 2, 3, 4);
+        entity = new Goblin();
         item = new Item("name", 0, Rarity.COMMON);
     }
 

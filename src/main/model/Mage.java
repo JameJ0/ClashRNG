@@ -40,7 +40,7 @@ public class Mage extends Player {
         return json;
     }
 
-    // EFFECTS: returns the bandit's sprite
+    // EFFECTS: returns the mage's sprite
     @Override
     public Image getImage() {
         return sprite;

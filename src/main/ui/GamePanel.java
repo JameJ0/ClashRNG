@@ -12,10 +12,6 @@ import javax.imageio.ImageIO;
 
 import javax.swing.*;
 
-import persistence.JsonReader;
-import persistence.JsonWriter;
-
-import model.exceptions.WrongEntityTypeException;
 import model.*;
 
 // The panel in which the game is rendered

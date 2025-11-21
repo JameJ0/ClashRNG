@@ -6,12 +6,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import org.json.JSONObject;
 
 // Represents an goblin type enemy
@@ -46,7 +40,7 @@ public class Goblin extends Enemy {
         return json;
     }
 
-    // EFFECTS: returns the bandit's sprite
+    // EFFECTS: returns the goblin's sprite
     @Override
     public Image getImage() {
         return sprite;

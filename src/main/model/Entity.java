@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Image;
-import java.awt.Image;
 import java.util.*;
 
 import org.json.JSONArray;
@@ -130,7 +129,7 @@ public abstract class Entity implements Writable {
     public int getY() {
         return posY;
     }
-    
+
     public void setHealth(double health) {
         this.health = health;
     }
