@@ -130,15 +130,7 @@ public abstract class Entity implements Writable {
     public int getY() {
         return posY;
     }
-
-    public int getX() {
-        return posX;
-    }
-
-    public int getY() {
-        return posY;
-    }
-
+    
     public void setHealth(double health) {
         this.health = health;
     }
