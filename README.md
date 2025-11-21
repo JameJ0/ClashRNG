@@ -26,4 +26,8 @@ This project is of interest to me because I've always played video games my whol
 - As a user, I want to be able to save the game state (enemies, the player) to file
 - As a user, I want to be able to load my save from file (if I so choose)  
 
+(Phase 3 extras)
+- As a user, I want to be able to click on an item and sell it for coins
+- As a user, I want to be able to quick sell the low-rarity common items in one simple click
+
 

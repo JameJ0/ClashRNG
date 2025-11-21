@@ -2,11 +2,6 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import java.awt.Image;
 
 import org.json.JSONObject;

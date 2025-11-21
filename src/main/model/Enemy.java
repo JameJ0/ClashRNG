@@ -2,6 +2,8 @@ package model;
 
 import java.awt.Image;
 
+import ui.Assets;
+
 // represents a general enemy in the game
 public abstract class Enemy extends Entity {
 
@@ -25,7 +27,7 @@ public abstract class Enemy extends Entity {
         } else {
             rarity = Rarity.COMMON;
         }
-        return new Item("Item", 2, rarity);
+        return new Item("Item", 2, rarity, Assets.getItemImage(rarity));
     }
 
 }

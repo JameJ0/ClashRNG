@@ -15,11 +15,11 @@ public class TestItem {
 
     @BeforeEach
     void runBefore() {
-        item1 = new Item("Item", 1, Rarity.COMMON);
-        item2 = new Item("Item", 2, Rarity.UNCOMMON);
-        item3 = new Item("Item", 3, Rarity.RARE);
-        item4 = new Item("Item", 4, Rarity.EPIC);
-        item5 = new Item("Item", 5, Rarity.LEGENDARY);
+        item1 = new Item("Item", 1, Rarity.COMMON, null);
+        item2 = new Item("Item", 2, Rarity.UNCOMMON, null);
+        item3 = new Item("Item", 3, Rarity.RARE, null);
+        item4 = new Item("Item", 4, Rarity.EPIC, null);
+        item5 = new Item("Item", 5, Rarity.LEGENDARY, null);
     }
 
     @Test
@@ -27,6 +27,20 @@ public class TestItem {
         assertTrue(item1.getName().equals("Item"));
         assertEquals(1, item1.getWeight());
         assertEquals(Rarity.COMMON, item1.getRarity());
+        assertNull(item1.getImage());
+        item1.setX(2);
+        item1.setY(7);
+        assertEquals(7, item1.getY());
+        assertEquals(2, item1.getX());
+    }
+
+    @Test
+    void testGetValue() {
+        assertEquals(1, item1.getValue());
+        assertEquals(5, item2.getValue());
+        assertEquals(10, item3.getValue());
+        assertEquals(50, item4.getValue());
+        assertEquals(100, item5.getValue());
     }
 
     @Test

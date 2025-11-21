@@ -3,13 +3,15 @@ package model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.event.KeyEvent;
-
+import java.awt.image.BufferedImage;
 import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.junit.jupiter.api.*;
+
+import model.GameState.Status;
 
 public class TestGameState {
 
@@ -18,14 +20,22 @@ public class TestGameState {
     List<Enemy> enemies;
     Enemy goblin;
     Enemy goblin2;
+    BufferedImage fakeSprite;
 
     @BeforeEach
     void runBefore() {
+        fakeSprite = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
         gs = new GameState();
-        player = new Knight("name", null);
+        player = new Knight("name", fakeSprite);
         enemies = new ArrayList<>();
-        goblin = new Goblin(null);
-        goblin2 = new Goblin(null);
+        goblin = new Goblin(fakeSprite);
+        goblin2 = new Goblin(fakeSprite);
+    }
+
+    @Test
+    void testConstructor() {
+        gs.setStatus(Status.GAME_OVER);
+        assertEquals(Status.GAME_OVER, gs.getStatus());
     }
 
     @Test
@@ -60,17 +70,34 @@ public class TestGameState {
     @Test
     void testUpdate() {
         player.setDX(1);
-        goblin.setDX(1);
-        goblin2.setDX(2);
+        player.setHealth(0);
+        gs.clearAllEnemies();
         enemies.add(goblin);
         enemies.add(goblin2);
+        goblin2.setX(1000);
+        goblin.setHealth(1);
         gs.setEnemies(enemies);
         gs.setPlayer(player);
         gs.update();
         assertEquals(1, player.getX());
-        assertEquals(1, enemies.get(0).getX());
-        assertEquals(2, enemies.get(1).getX());
-    }   
+        assertEquals(Status.GAME_OVER, gs.getStatus());
+    }
+
+    @Test
+    void testDiscardCommon() {
+        gs.getPlayer().addToInventory(new Item("test", 0, Rarity.COMMON, null));
+        gs.getPlayer().addToInventory(new Item("test", 0, Rarity.RARE, null));
+        gs.discardCommonItems();
+        assertEquals(1, gs.getPlayer().getInventory().size());
+    }
+
+    @Test
+    void testItemCollection() {
+        for (int i = 0; i < 100; i++) {
+            gs.generateDrop(goblin);
+        }
+        assertTrue(gs.getDroppedItems().size() >= 1);
+    }
 
     @Test
     void testKey() {

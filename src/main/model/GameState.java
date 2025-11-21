@@ -14,46 +14,136 @@ import java.util.*;
 public class GameState implements Writable {
     private Player player;
     private List<Enemy> enemies;
+    private List<Item> droppedItems;
 
     public static final int WIDTH = 1600;
     public static final int HEIGHT = 900;
 
     private Random rand;
 
+    private Status gameStatus;
+
     // EFFECTS: creates a new game and initialize entites
     public GameState() {
+        this.gameStatus = Status.MENU;
         rand = new Random();
         enemies = new ArrayList<>();
+        droppedItems = new ArrayList<>();
 
-        player = new Knight("Test", Assets.knightSprite);
+        player = new Knight("Name", Assets.knightSprite);
         player.setX(100);
         player.setY(100);
-
-        Enemy goblin = new Goblin(Assets.goblinSprite);
-        goblin.setX(400);
-        goblin.setY(300);
-        enemies.add(goblin);
     }
 
     // MODIFIES: this
     // changes the positions of the entites in the game
     public void update() {
+        checkItemCollection();
         player.update();
-        for (Enemy e : enemies) {
-            e.update();
+        for (int i = enemies.size() - 1; i >= 0; i--) {
+            Enemy enemy = enemies.get(i);
+            enemy.update();
+            if (player.colliding(enemy)) {
+                enemy.takeTrueDamage(player);
+                player.takeTrueDamage(enemy);
+            }
+            if (enemy.getHealth() <= 0) {
+                generateDrop(enemy);
+                enemies.remove(i);
+            }
         }
+        if (player.getHealth() <= 0) {
+            gameStatus = Status.GAME_OVER;
+        }
+        respawnEnemies();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sell all the common items in inventory
+    public void discardCommonItems() {
+        List<Item> noCommon = new ArrayList<>();
+        int size = player.getInventory().size();
+        for (Item i : player.getInventory()) {
+            if (i.getRarity() != Rarity.COMMON) {
+                noCommon.add(i);
+            }
+        }
+        player.setInventory(noCommon);
+        player.addLoot(size - noCommon.size());
+    }
+
+    // MODIFIES: this
+    // EFFECTS: checks if the player is touching any dropped item; if so, adds item
+    // to inventory and safely removes it from the droppedItems list.
+    private void checkItemCollection() {
+        for (int i = droppedItems.size() - 1; i >= 0; i--) {
+            Item item = droppedItems.get(i);
+
+            int itemW = item.getImage().getWidth(null);
+            int itemH = item.getImage().getHeight(null);
+
+            if (player.colliding(item.getX(), item.getY(), itemW, itemH)) {
+                player.addToInventory(item);
+                droppedItems.remove(i);
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: generate a drop based on rng, and add it to the ground (dropped
+    // Items)
+    public void generateDrop(Enemy e) {
+        double rng = rand.nextDouble() * 100;
+        if (rng < 50) {
+            Item i = e.generateDrop(rng);
+            i.setX(e.getX());
+            i.setY(e.getY());
+            droppedItems.add(i);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: when there are less than 5 enemies on screen, regenerate more
+    // enemies.
+    public void respawnEnemies() {
+        if (enemies.size() < 5) {
+            for (int i = 0; i < 5 - enemies.size(); i++) {
+                Goblin g = new Goblin(Assets.goblinSprite);
+                g.setX(rand.nextInt(GameState.WIDTH));
+                g.setY(rand.nextInt(GameState.HEIGHT));
+                enemies.add(g);
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: clears all the enemies on field
+    public void clearAllEnemies() {
+        enemies.clear();
     }
 
     public Player getPlayer() {
         return player;
     }
 
+    public Status getStatus() {
+        return gameStatus;
+    }
+
     public List<Enemy> getEnemies() {
         return Collections.unmodifiableList(enemies);
     }
 
+    public List<Item> getDroppedItems() {
+        return droppedItems;
+    }
+
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void setStatus(Status status) {
+        gameStatus = status;
     }
 
     public void setEnemies(List<Enemy> enemies) {
@@ -111,6 +201,12 @@ public class GameState implements Writable {
             jsonArray.put(enemy.toJson());
         }
         return jsonArray;
+    }
+
+    // an enum class to show the state of the game, in order to tell GamePanel
+    // what to draw in case of each state.
+    public enum Status {
+        MENU, PLAYING, GAME_OVER
     }
 
 }

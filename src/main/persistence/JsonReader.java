@@ -95,7 +95,7 @@ public class JsonReader {
         int weight = jsonObject.getInt("weight");
         String rarityString = jsonObject.getString("rarity");
         Rarity rarity = Rarity.valueOf(rarityString.toUpperCase());
-        return new Item(name, weight, rarity);
+        return new Item(name, weight, rarity, Assets.getItemImage(rarity));
     }
 
     // EFFECTS: parses and instantiate an entity based on its type

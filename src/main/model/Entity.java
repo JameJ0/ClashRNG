@@ -13,6 +13,7 @@ import persistence.Writable;
 public abstract class Entity implements Writable {
 
     private double health;
+    private double maxHealth;
     private double attack;
     private double defense;
     private int speed;
@@ -40,6 +41,7 @@ public abstract class Entity implements Writable {
         dx = 0;
         dy = 0;
         this.sprite = sprite;
+        maxHealth = hp;
     }
 
     // MODIFIES: this
@@ -77,6 +79,32 @@ public abstract class Entity implements Writable {
         }
     }
 
+    // REQUIRES: all fields > 0
+    // EFFECTS: determines if its colliding with another object with pos and
+    // dimensions
+    public boolean colliding(int x, int y, int w, int h) {
+        Image thisSprite = getImage();
+
+        int thisW = thisSprite.getWidth(null);
+        int thisH = thisSprite.getHeight(null);
+
+        boolean collideX = (this.posX < x + w) && (this.posX + thisW > x);
+        boolean collideY = (this.posY < y + h) && (this.posY + thisH > y);
+
+        return collideX && collideY;
+    }
+
+    // REQUIRES: other has a non null sprite field
+    // EFFECTS: determines if its colliding with another entity
+    public boolean colliding(Entity other) {
+        Image otherSprite = other.getImage();
+
+        int otherW = otherSprite.getWidth(null);
+        int otherH = otherSprite.getHeight(null);
+
+        return this.colliding(other.getX(), other.getY(), otherW, otherH);
+    }
+
     // REQUIRES: loot > 0
     // MODIFIES: this
     // EFFECTS: adds loot to the entity
@@ -100,8 +128,20 @@ public abstract class Entity implements Writable {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: calculates the true damage taken from the other entity
+    public void takeTrueDamage(Entity other) {
+        double trueDamage = other.getAttack() - this.getDefense();
+        trueDamage = Math.max(0, trueDamage);
+        takeDamage(trueDamage);
+    }
+
     public double getHealth() {
         return health;
+    }
+
+    public double getMaxHealth() {
+        return maxHealth;
     }
 
     public double getAttack() {
@@ -139,7 +179,10 @@ public abstract class Entity implements Writable {
     public int getDY() {
         return dy;
     }
-    
+
+    public Image getImage() {
+        return sprite;
+    }
 
     public void setHealth(double health) {
         this.health = health;
@@ -161,6 +204,10 @@ public abstract class Entity implements Writable {
         this.dy = dy;
     }
 
+    public void setInventory(List<Item> items) {
+        inventory = items;
+    }
+
     // EFFECTS: returns the object as a JSONObject
     @Override
     public JSONObject toJson() {
@@ -178,10 +225,6 @@ public abstract class Entity implements Writable {
             jsonArray.put(item.toJson());
         }
         return jsonArray;
-    }
-
-    public Image getImage() {
-        return sprite;
     }
 
 }

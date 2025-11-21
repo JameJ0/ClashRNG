@@ -13,7 +13,7 @@
 // import persistence.JsonWriter;
 
 // // The essence of the game, all presented in the terminal.
-// public class ConsoleGame extends JFrame{
+// public class ConsoleGame extends JFrame {
 
 //     private Scanner sc;
 //     private List<Enemy> enemies;
@@ -22,7 +22,6 @@
 //     private Player player;
 //     private String input;
 //     private String name;
-
 
 //     private static final String JSON_STORE = "./data/gamestate.json";
 //     private JsonWriter jsonWriter;
@@ -35,7 +34,7 @@
 //     public ConsoleGame() throws FileNotFoundException {
 //         super("test");
 //         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-// 		setUndecorated(false);
+//         setUndecorated(false);
 //         init();
 //         initGameState();
 //         runGame();
@@ -301,7 +300,7 @@
 //         } catch (IOException e) {
 //             System.out.println("\nUnable to read from file: " + JSON_STORE);
 //         } catch (WrongEntityTypeException e) {
-//             System.out.println("\nentity type mismatch");
+//             System.out.println("\nentity type mismatch");sd
 //         }
 //     }
 

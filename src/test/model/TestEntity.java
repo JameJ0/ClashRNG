@@ -19,7 +19,7 @@ public class TestEntity {
         BufferedImage fakeSprite = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
         entity = new Goblin(fakeSprite);
         entity2 = new Goblin(null);
-        item = new Item("name", 0, Rarity.COMMON);
+        item = new Item("name", 0, Rarity.COMMON, null);
     }
 
     @Test
@@ -40,6 +40,7 @@ public class TestEntity {
     void testSetHealth() {
         entity.setHealth(0);
         assertEquals(0, entity.getHealth());
+        assertEquals(15, entity.getMaxHealth());
     }
 
     @Test
