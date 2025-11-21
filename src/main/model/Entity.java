@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Image;
+import java.awt.Image;
 import java.util.*;
 
 import org.json.JSONArray;
@@ -120,6 +121,14 @@ public abstract class Entity implements Writable {
 
     public List<Item> getInventory() {
         return inventory;
+    }
+
+    public int getX() {
+        return posX;
+    }
+
+    public int getY() {
+        return posY;
     }
 
     public int getX() {

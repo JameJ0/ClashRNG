@@ -9,8 +9,13 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+
 import javax.swing.*;
 
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import model.exceptions.WrongEntityTypeException;
 import model.*;
 
 // The panel in which the game is rendered
@@ -27,6 +32,7 @@ public class GamePanel extends JPanel {
 
     public void loadImages() {
         try {
+            bg = ImageIO.read(new File("./res/images/bg.jpg"));
             bg = ImageIO.read(new File("./res/images/bg.jpg"));
         } catch (IOException e) {
             System.out.println("The path is wrong");
@@ -48,6 +54,7 @@ public class GamePanel extends JPanel {
         drawPlayer(g, gs.getPlayer());
         drawEnemies(g, gs.getEnemies());
     }
+
 
     // MODIFIES: g
     // EFFECTS: a helper to draw the enemies on g
