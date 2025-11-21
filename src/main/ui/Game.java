@@ -8,7 +8,7 @@ import model.GameState;
 
 // opens a window to the game and tells GameState if a key is pressed and when it repaints
 public class Game extends JFrame {
-    private static final int INTERVAL = 3; // TODO: 16 for 60FPS
+    private static final int INTERVAL = 3; // TODO: change to 16 for 60FPS
 
     private GamePanel gp;
     private GameState gs;
