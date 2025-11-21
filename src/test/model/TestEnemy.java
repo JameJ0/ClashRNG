@@ -30,5 +30,5 @@ public class TestEnemy {
         assertEquals(Rarity.UNCOMMON, i.getRarity());
         i = enemy.generateDrop(30);
         assertEquals(Rarity.COMMON, i.getRarity());
-    }  
+    }
 }

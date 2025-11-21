@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-
 import javax.swing.*;
 
 import model.*;
@@ -51,11 +50,10 @@ public class GamePanel extends JPanel {
         drawEnemies(g, gs.getEnemies());
     }
 
-
     // MODIFIES: g
     // EFFECTS: a helper to draw the enemies on g
     public void drawEnemies(Graphics g, List<Enemy> loe) {
-        for (Enemy e : loe ) {
+        for (Enemy e : loe) {
             drawEnemy(g, e);
         }
     }

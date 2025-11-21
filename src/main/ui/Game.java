@@ -12,7 +12,7 @@ public class Game extends JFrame {
 
     private GamePanel gp;
     private GameState gs;
-    private Timer t;
+    private Timer timer;
 
     // EFFECTS: initializes the game mechanics (timer and keyListener), opens a
     // window and adds the panel to the window
@@ -39,6 +39,7 @@ public class Game extends JFrame {
         public void keyPressed(KeyEvent e) {
             gs.keyPressed(e.getKeyCode());
         }
+
         @Override
         public void keyReleased(KeyEvent e) {
             gs.keyReleased(e.getKeyCode());
@@ -48,13 +49,13 @@ public class Game extends JFrame {
     // MODIFIES: this
     // EFFECTS: adds a timer that refreshes per INTERVAL and updates the game
     private void addTimer() {
-        t = new Timer(INTERVAL, new ActionListener() {
+        timer = new Timer(INTERVAL, new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 gs.update();
                 gp.repaint();
             }
         });
-        t.start();
+        timer.start();
     }
 
     public static void main(String[] args) {

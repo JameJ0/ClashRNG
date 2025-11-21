@@ -17,7 +17,7 @@ public class TestPlayer {
     @Test
     void testConstructor() {
         assertEquals("name", player.getName());
-        assertEquals(5, player.getMana());
+        assertEquals(50, player.getMana());
         assertEquals(0, player.getLoot());
     }
 
@@ -26,7 +26,6 @@ public class TestPlayer {
         player.setMana(2);
         assertEquals(2, player.getMana());
     }
-
 
     @Test
     void testJson() {

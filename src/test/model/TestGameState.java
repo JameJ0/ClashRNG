@@ -47,6 +47,6 @@ public class TestGameState {
         assertEquals(3, jsEnemies.length());
         JSONObject playerFromJson = jsgs.getJSONObject("player");
         assertEquals("name", playerFromJson.getString("name"));
-        assertEquals(5, playerFromJson.getInt("mana"));
+        assertEquals(50, playerFromJson.getInt("mana"));
     }
 }

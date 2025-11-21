@@ -9,7 +9,7 @@ import org.junit.jupiter.api.*;
 public class TestEntity {
 
     Entity entity;
-    Item item; 
+    Item item;
 
     @BeforeEach
     void runBefore() {
@@ -19,11 +19,11 @@ public class TestEntity {
 
     @Test
     void testConstructor() {
-        assertEquals(1, entity.getHealth());
-        assertEquals(2, entity.getAttack());
-        assertEquals(3, entity.getDefense());
-        assertEquals(4, entity.getSpeed());
-        assertEquals(0, entity.getLoot());
+        assertEquals(15, entity.getHealth());
+        assertEquals(4, entity.getAttack());
+        assertEquals(1, entity.getDefense());
+        assertEquals(2, entity.getSpeed());
+        assertEquals(5, entity.getLoot());
         assertEquals(0, entity.getInventory().size());
     }
 
@@ -36,9 +36,9 @@ public class TestEntity {
     @Test
     void testTakeDamage() {
         entity.takeDamage(1);
-        assertEquals(0, entity.getHealth());
+        assertEquals(14, entity.getHealth());
         entity.takeDamage(1);
-        assertEquals(0, entity.getHealth());
+        assertEquals(13, entity.getHealth());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TestEntity {
     @Test
     void testAddLoot() {
         entity.addLoot(1);
-        assertEquals(1, entity.getLoot());
+        assertEquals(6, entity.getLoot());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class TestEntity {
         JSONObject jsEntity = entity.toJson();
         JSONArray jsArr = jsEntity.getJSONArray("inventory");
         assertEquals(1, jsArr.length());
-        assertEquals(1, jsEntity.getDouble("health"));
-        assertEquals(0, jsEntity.getInt("loot"));
+        assertEquals(15, jsEntity.getDouble("health"));
+        assertEquals(5, jsEntity.getInt("loot"));
     }
 }

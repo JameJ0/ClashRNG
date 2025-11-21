@@ -26,7 +26,7 @@ public class TestItem {
     void testConstructor() {
         assertTrue(item1.getName().equals("Item"));
         assertEquals(1, item1.getWeight());
-        assertEquals(Rarity.COMMON,item1.getRarity());
+        assertEquals(Rarity.COMMON, item1.getRarity());
     }
 
     @Test

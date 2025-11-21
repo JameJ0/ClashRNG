@@ -15,7 +15,7 @@ public class Knight extends Player {
 
     // EFFECTS: creates a knight with the player's name, and load its sprite
     public Knight(String name) {
-        super(name, 20.0, 3.0, 5.0, 20, 50.0); // TODO: changed speed to 2 after done
+        super(name, 20.0, 3.0, 5.0, 2, 50.0);
         if (sprite == null) {
             try {
                 sprite = ImageIO.read(new File("./res/images/knight.png"));

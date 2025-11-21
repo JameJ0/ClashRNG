@@ -30,5 +30,4 @@ public class TestBandit {
         assertEquals("Bandit", jsBandit.getString("type"));
     }
 
-
 }
