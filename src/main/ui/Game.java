@@ -133,10 +133,11 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Game();
+        // new Game(); //Uncomment this for the GUI
         // honestly i can and will add some more to the game. i spent so much time
         // building the structure that there was no more time to implement fun features.
         // the hard part (sorting out the GUI and heirarchies) is done, now its just
         // minor tweaks and QOL stuff.
+        new ConsoleGame(); // Uncomment this line for ConsoleGame
     }
 }
