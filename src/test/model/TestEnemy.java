@@ -10,7 +10,7 @@ public class TestEnemy {
 
     @BeforeEach
     public void runBefore() {
-        enemy = new Goblin();
+        enemy = new Goblin(null);
     }
 
     @Test

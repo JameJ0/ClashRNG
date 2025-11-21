@@ -2,16 +2,10 @@ package model;
 
 import org.json.*;
 
-import model.exceptions.WrongEntityTypeException;
-
-import persistence.JsonReader;
-import persistence.JsonWriter;
 import persistence.Writable;
+import ui.Assets;
 
 import java.awt.event.KeyEvent;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import java.util.*;
 
@@ -20,10 +14,6 @@ import java.util.*;
 public class GameState implements Writable {
     private Player player;
     private List<Enemy> enemies;
-
-    private static final String JSON_STORE = "./data/gamestate.json";
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
 
     public static final int WIDTH = 1600;
     public static final int HEIGHT = 900;
@@ -35,11 +25,11 @@ public class GameState implements Writable {
         rand = new Random();
         enemies = new ArrayList<>();
 
-        player = new Knight("Test");
+        player = new Knight("Test", Assets.knightSprite);
         player.setX(100);
         player.setY(100);
 
-        Enemy goblin = new Goblin();
+        Enemy goblin = new Goblin(Assets.goblinSprite);
         goblin.setX(400);
         goblin.setY(300);
         enemies.add(goblin);
@@ -74,37 +64,33 @@ public class GameState implements Writable {
     // EFFECTS: set the velocity of the player based in the key input
     public void keyPressed(int keyCode) {
         int speed = player.getSpeed();
-        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+        if (keyCode == KeyEvent.VK_W) {
             player.setDY(-speed);
         }
-        if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+        if (keyCode == KeyEvent.VK_S) {
             player.setDY(speed);
         }
-        if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+        if (keyCode == KeyEvent.VK_A) {
             player.setDX(-speed);
         }
-        if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+        if (keyCode == KeyEvent.VK_D) {
             player.setDX(speed);
-        } else if (keyCode == KeyEvent.VK_O) {
-            saveGameState();
-        } else if (keyCode == KeyEvent.VK_I) {
-            loadGameState();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: stops the player when the key is being released
     public void keyReleased(int keyCode) {
-        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+        if (keyCode == KeyEvent.VK_W) {
             player.setDY(0);
         }
-        if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+        if (keyCode == KeyEvent.VK_S) {
             player.setDY(0);
         }
-        if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+        if (keyCode == KeyEvent.VK_A) {
             player.setDX(0);
         }
-        if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+        if (keyCode == KeyEvent.VK_D) {
             player.setDX(0);
         }
     }
@@ -127,31 +113,4 @@ public class GameState implements Writable {
         return jsonArray;
     }
 
-    // MODIFIES: this
-    // EFFECTS: saves the game to file
-    private void saveGameState() {
-        try {
-            jsonWriter.open();
-            jsonWriter.write(this);
-            jsonWriter.close();
-            System.out.println("Saved game to " + JSON_STORE);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads game from file
-    private void loadGameState() {
-        try {
-            GameState load = jsonReader.read();
-            player = load.getPlayer();
-            enemies = new ArrayList<>(load.getEnemies());
-            System.out.println("Loaded previous game from " + JSON_STORE);
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
-        } catch (WrongEntityTypeException e) {
-            System.out.println("Entity type mismatch");
-        }
-    }
 }

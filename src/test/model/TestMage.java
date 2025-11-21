@@ -11,7 +11,7 @@ public class TestMage {
 
     @BeforeEach
     void runBefore() {
-        mage = new Mage("name");
+        mage = new Mage("name", null);
     }
 
     @Test

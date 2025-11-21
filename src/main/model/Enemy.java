@@ -1,11 +1,13 @@
 package model;
 
+import java.awt.Image;
+
 // represents a general enemy in the game
 public abstract class Enemy extends Entity {
 
     // EFFECTS: creates an enemy with specified stats
-    public Enemy(int loot, double hp, double atk, double def, int spd) {
-        super(loot, hp, atk, def, spd);
+    public Enemy(int loot, double hp, double atk, double def, int spd, Image sprite) {
+        super(loot, hp, atk, def, spd, sprite);
     }
 
     // REQUIRES: 0 < randNum < 50

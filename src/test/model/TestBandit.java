@@ -2,16 +2,25 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import java.awt.Image;
+
 import org.json.JSONObject;
+
 import org.junit.jupiter.api.*;
 
 public class TestBandit {
 
     Bandit bandit;
+    Image sprite;
 
     @BeforeEach
     void runBefore() {
-        bandit = new Bandit("name");
+        bandit = new Bandit("name", null);
     }
 
     @Test

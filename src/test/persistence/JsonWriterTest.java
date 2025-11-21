@@ -15,12 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class JsonWriterTest {
 
     List<Enemy> enemies;
+    Enemy goblin1;
+    Enemy goblin2;
 
     @BeforeEach
     void runBefore() {
         enemies = new ArrayList<>();
-        enemies.add(new Goblin());
-        enemies.add(new Goblin());
+        goblin1 = new Goblin(null);
+        goblin2 = new Goblin(null);
+        enemies.add(goblin1);
+        enemies.add(goblin2);
     }
 
     @Test
@@ -38,7 +42,7 @@ class JsonWriterTest {
     void testWriterGeneralWorkroom() {
         try {
             GameState gs = new GameState();
-            Player p = new Knight("name");
+            Player p = new Knight("name", null);
             gs.setPlayer(p);
             gs.setEnemies(enemies);
 

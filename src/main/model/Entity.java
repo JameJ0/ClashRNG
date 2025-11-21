@@ -1,10 +1,11 @@
 package model;
 
-import java.awt.Image;
 import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.awt.Image;
 
 import persistence.Writable;
 
@@ -22,10 +23,12 @@ public abstract class Entity implements Writable {
     private int dx;
     private int dy;
 
+    private Image sprite;
+
     private List<Item> inventory;
 
     // EFFECTS: Creates an entity with an empty inventory and specified stats
-    public Entity(int loot, double hp, double atk, double def, int spd) {
+    public Entity(int loot, double hp, double atk, double def, int spd, Image sprite) {
         health = hp;
         attack = atk;
         defense = def;
@@ -36,20 +39,26 @@ public abstract class Entity implements Writable {
         posY = 0;
         dx = 0;
         dy = 0;
+        this.sprite = sprite;
     }
 
     // MODIFIES: this
-    // EFFECTS: move the Entity based on its speed in x and y
+    // EFFECTS: update the Entity's location based on its velocity
     public void update() {
+        move();
+        handleBoundaries();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: move the entity by dx and dy
+    public void move() {
         posX += dx;
         posY += dy;
-        handleBoundaries();
     }
 
     // MODIFIES: this
     // EFFECTS: makes sure the Entity stays in the window
     public void handleBoundaries() {
-        Image sprite = getImage();
         int windowWidth = GameState.WIDTH;
         int windowHeight = GameState.HEIGHT;
         if (sprite != null) {
@@ -91,13 +100,6 @@ public abstract class Entity implements Writable {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: move the entity by dx and dy
-    public void move(int dx, int dy) {
-        posX += dx;
-        posY += dy;
-    }
-
     public double getHealth() {
         return health;
     }
@@ -129,6 +131,15 @@ public abstract class Entity implements Writable {
     public int getY() {
         return posY;
     }
+
+    public int getDX() {
+        return dx;
+    }
+
+    public int getDY() {
+        return dy;
+    }
+    
 
     public void setHealth(double health) {
         this.health = health;
@@ -169,7 +180,8 @@ public abstract class Entity implements Writable {
         return jsonArray;
     }
 
-    // EFFECTS: returns the sprite of the entity
-    public abstract Image getImage();
+    public Image getImage() {
+        return sprite;
+    }
 
 }

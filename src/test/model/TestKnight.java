@@ -11,7 +11,7 @@ public class TestKnight {
 
     @BeforeEach
     void runBefore() {
-        knight = new Knight("name");
+        knight = new Knight("name",null);
     }
 
     @Test

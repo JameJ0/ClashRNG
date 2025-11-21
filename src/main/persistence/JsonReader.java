@@ -2,6 +2,7 @@ package persistence;
 
 import model.*;
 import model.exceptions.WrongEntityTypeException;
+import ui.Assets;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -57,13 +58,13 @@ public class JsonReader {
         String type = jsonObject.getString("type");
         switch (type) {
             case "Knight":
-                player = new Knight(jsonObject.getString("name"));
+                player = new Knight(jsonObject.getString("name"), Assets.knightSprite);
                 break;
             case "Mage":
-                player = new Mage(jsonObject.getString("name"));
+                player = new Mage(jsonObject.getString("name"), Assets.mageSprite);
                 break;
             case "Bandit":
-                player = new Bandit(jsonObject.getString("name"));
+                player = new Bandit(jsonObject.getString("name"), Assets.banditSprite);
                 break;
             default:
                 throw new WrongEntityTypeException("The type " + type + " does not exist.");
@@ -104,7 +105,7 @@ public class JsonReader {
         String type = jsonObject.getString("type");
         switch (type) {
             case "Goblin":
-                enemy = new Goblin();
+                enemy = new Goblin(Assets.goblinSprite);
                 break;
             default:
                 throw new WrongEntityTypeException("The type " + type + " does not exist.");
@@ -127,4 +128,5 @@ public class JsonReader {
         }
         return enemies;
     }
+    
 }

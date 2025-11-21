@@ -2,36 +2,51 @@ package ui;
 
 import java.awt.*;
 
-import java.io.File;
-import java.io.IOException;
-
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
 import javax.swing.*;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import model.*;
 
 // The panel in which the game is rendered
 public class GamePanel extends JPanel {
     private GameState gs;
-    private Image bg;
+    private Game game; // so we can save from the button
 
-    public GamePanel(GameState gs) {
+    public GamePanel(GameState gs, Game game) {
         this.gs = gs;
+        this.game = game;
+
         setPreferredSize(new Dimension(GameState.WIDTH, GameState.HEIGHT));
         setBackground(Color.black);
-        loadImages();
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                handleMouseClick(e.getX(), e.getY());
+            }
+        });
     }
 
-    public void loadImages() {
-        try {
-            bg = ImageIO.read(new File("./res/images/bg.jpg"));
-            bg = ImageIO.read(new File("./res/images/bg.jpg"));
-        } catch (IOException e) {
-            System.out.println("The path is wrong");
+    private void handleMouseClick(int mouseX, int mouseY) {
+        int iconW = Assets.saveIcon.getWidth(null);
+        int iconH = Assets.saveIcon.getHeight(null);
+
+        int btnX = getWidth() - iconW;
+        int btnY = 0;
+
+        if (mouseX >= btnX && mouseX <= btnX + iconW 
+                && mouseY >= btnY && mouseY <= btnY + iconH) {
+            System.out.println("Game Saved");
+            game.saveGame();
         }
+    }
+
+    public void setGameState(GameState load) {
+        gs = load;
     }
 
     // MODIFIES: g
@@ -45,7 +60,8 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draw the background and entities on the panel
     public void drawGame(Graphics g) {
-        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage(Assets.bg, 0, 0, getWidth(), getHeight(), this);
+        drawUI(g);
         drawPlayer(g, gs.getPlayer());
         drawEnemies(g, gs.getEnemies());
     }
@@ -71,6 +87,12 @@ public class GamePanel extends JPanel {
     public void drawPlayer(Graphics g, Player p) {
         if (p != null && p.getImage() != null) {
             g.drawImage(p.getImage(), p.getX(), p.getY(), this);
+        }
+    }
+
+    public void drawUI(Graphics g) {
+        if (Assets.saveIcon != null) {
+            g.drawImage(Assets.saveIcon, getWidth() - Assets.saveIcon.getWidth(null), 0, null);
         }
     }
 

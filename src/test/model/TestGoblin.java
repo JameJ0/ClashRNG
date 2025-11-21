@@ -11,7 +11,7 @@ public class TestGoblin {
 
     @BeforeEach
     void runBefore() {
-        goblin = new Goblin();
+        goblin = new Goblin(null);
     }
 
     @Test
