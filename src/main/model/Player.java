@@ -3,12 +3,12 @@ package model;
 import org.json.JSONObject;
 
 // represents a player in the game
-public class Player extends Entity {
+public abstract class Player extends Entity {
     private String name;
     private double mana;
 
     // EFFECTS: creates a player with a name and specified stats
-    public Player(String name, double hp, double atk, double def, double spd, double mp) {
+    public Player(String name, double hp, double atk, double def, int spd, double mp) {
         super(0, hp, atk, def, spd);
         mana = mp;
         this.name = name;

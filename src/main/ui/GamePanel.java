@@ -1,41 +1,76 @@
 package ui;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
 
+import java.util.List;
+
 import javax.imageio.ImageIO;
+
 import javax.swing.*;
 
 import model.*;
 
 // The panel in which the game is rendered
-public class GamePanel extends JPanel{
+public class GamePanel extends JPanel {
     private GameState gs;
-    private Image test;
+    private Image bg;
 
     public GamePanel(GameState gs) {
-        setPreferredSize(new Dimension(800, 600));
-        setBackground(Color.gray);
-        loadImages();
         this.gs = gs;
+        setPreferredSize(new Dimension(GameState.WIDTH, GameState.HEIGHT));
+        setBackground(Color.black);
+        loadImages();
     }
 
     public void loadImages() {
         try {
-            test = ImageIO.read(new File("/res/images/butterfly.jpg"));
+            bg = ImageIO.read(new File("./res/images/bg.jpg"));
         } catch (IOException e) {
             System.out.println("The path is wrong");
         }
     }
 
-    public void drawGame(Graphics g) {
-        drawPlayer(g);
+    // MODIFIES: g
+    // EFFECTS: clears the screen and draw the game
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawGame(g);
     }
 
-    public void drawPlayer(Graphics g) {
-        g.drawImage(test, 0, 0, this);
+    // MODIFIES: g
+    // EFFECTS: draw the background and entities on the panel
+    public void drawGame(Graphics g) {
+        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+        drawPlayer(g, gs.getPlayer());
+        drawEnemies(g, gs.getEnemies());
     }
-    
+
+    // MODIFIES: g
+    // EFFECTS: a helper to draw the enemies on g
+    public void drawEnemies(Graphics g, List<Enemy> loe) {
+        for (Enemy e : loe ) {
+            drawEnemy(g, e);
+        }
+    }
+
+    // MODIFIES: g
+    // EFFECTS: draw an enemy on g
+    public void drawEnemy(Graphics g, Enemy e) {
+        if (e != null && e.getImage() != null) {
+            g.drawImage(e.getImage(), e.getX(), e.getY(), this);
+        }
+    }
+
+    // MODIFIES: g
+    // EFFECTS: draw the palyer on g
+    public void drawPlayer(Graphics g, Player p) {
+        if (p != null && p.getImage() != null) {
+            g.drawImage(p.getImage(), p.getX(), p.getY(), this);
+        }
+    }
+
 }
