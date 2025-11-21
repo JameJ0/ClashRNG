@@ -1,7 +1,7 @@
 package model;
 
 // represents a general enemy in the game
-public class Enemy extends Entity {
+public abstract class Enemy extends Entity {
 
     // EFFECTS: creates an enemy with specified stats
     public Enemy(int loot, double hp, double atk, double def, double spd) {
@@ -25,4 +25,5 @@ public class Enemy extends Entity {
         }
         return new Item("Item", 2, rarity);
     }
+
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Image;
 import java.util.*;
 
 import org.json.JSONArray;
@@ -8,12 +9,18 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 // Represents a moving  entity in the game
-public class Entity implements Writable {
+public abstract class Entity implements Writable {
+    protected Image sprite;
+
     private double health;
     private double attack;
     private double defense;
     private double speed;
+
     private int loot;
+
+    private int posX;
+    private int posY;
 
     private List<Item> inventory;
 
@@ -25,6 +32,8 @@ public class Entity implements Writable {
         speed = spd;
         this.loot = loot;
         inventory = new ArrayList<>();
+        posX = 0;
+        posY = 0;
     }
 
     // REQUIRES: loot > 0
@@ -48,6 +57,13 @@ public class Entity implements Writable {
         if (health < 0) {
             health = 0;
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: move the entity by dx and dy
+    public void move (int dx, int dy) {
+        posX += dx;
+        posY += dy;
     }
 
     public double getHealth() {
@@ -74,8 +90,24 @@ public class Entity implements Writable {
         return inventory;
     }
 
+    public int getX() {
+        return posX;
+    }
+
+    public int getY() {
+        return posY;
+    }
+
     public void setHealth(double health) {
         this.health = health;
+    }
+
+    public void setX(int x) {
+        posX = x;
+    }
+
+    public void setY(int y) {
+        posY = y;
     }
 
     // EFFECTS: returns the object as a JSONObject
@@ -95,6 +127,10 @@ public class Entity implements Writable {
             jsonArray.put(item.toJson());
         }
         return jsonArray;
+    }
+
+    public Image toImage() {
+        return sprite;
     }
 
 }
