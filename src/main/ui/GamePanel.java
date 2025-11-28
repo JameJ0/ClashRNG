@@ -15,7 +15,7 @@ import model.GameState.Status;
 // The panel in which the game is rendered
 public class GamePanel extends JPanel {
     private GameState gs;
-    private Game game;
+    private GameFrame game;
 
     private static final int INV_BAR_HEIGHT = 80;
     private static final int ITEM_PADDING = 40;
@@ -35,7 +35,7 @@ public class GamePanel extends JPanel {
     private static final int CHECKMARK_DURATION = 100;
 
     // EFFECTS: initiates the panel, and add the gamestate and the game controller
-    public GamePanel(GameState gs, Game game) {
+    public GamePanel(GameState gs, GameFrame game) {
         this.gs = gs;
         this.game = game;
 

@@ -102,3 +102,8 @@ Picked up an item: Common Item
 Fri Nov 28 05:29:16 PST 2025
 Discarded 1 common items from player inventory.
 
+## Phase 4 Task 3
+
+As you can see from the UML, the GamePanel class and the GameFrame class both have each other, which shouldn't really happen. Usually, only GameFrame needs to have GamePanel. This is needed to trigger stuff like saving the game, because mouse clicks are handled in the GamePanel class. For now, I have no idea how I would refactor this so that this 'dual dependency' isn't needed. Maybe I can make an interface that GameFrame would implement, with methods like onSaveGame(), so that GamePanel would only need to hold a reference to the interface type. For example, the GamePanel class would have the field interface, then the constructor would have the interface as a parameter, and whenever it needs to save, it would call the interface.saveGame(). It doesn't seem that much better to implement it this way, but it would be nice to clear up the confusion of having each other as a field.
+
+Another place where I can refactor is definitely the GameState class, because it has way too many responsibilities. Data storage, game logic, combat simulation, etc. This is way too many responsibilities for one class. If I had more time, perhaps I would've refactored some of those responsibilities to other classes, like a physics engine class or a combat manager class. So during update(), I would just pass the entities to those classes, and get the results. After the refactor, I can change and test different component classes without tinkering and creating new bugs with the core GameState.

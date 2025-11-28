@@ -13,7 +13,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 // opens a window to the game and tells GameState if a key is pressed and when it repaints
-public class Game extends JFrame {
+public class GameFrame extends JFrame {
     private static final int INTERVAL = 3;
 
     private GamePanel gp;
@@ -26,7 +26,7 @@ public class Game extends JFrame {
 
     // EFFECTS: initializes the game mechanics (timer and keyListener), opens a
     // window and adds the panel to the window
-    public Game() {
+    public GameFrame() {
         super("Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -148,11 +148,7 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Game(); // Uncomment this for the GUI
-        // honestly i can and will add some more to the game. i spent so much time
-        // building the structure that there was no more time to implement fun features.
-        // the hard part (sorting out the GUI and heirarchies) is done, now its just
-        // minor tweaks and QOL stuff.
-        // new ConsoleGame(); // Uncomment this line for ConsoleGame
+        new GameFrame();
+        // new ConsoleGame(); // Make the txt file java, then uncomment this line for ConsoleGame
     }
 }
