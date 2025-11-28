@@ -6,9 +6,9 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
-import model.GameState;
-import model.Item;
+import model.*;
 import model.exceptions.WrongEntityTypeException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -20,6 +20,7 @@ public class Game extends JFrame {
     private GamePanel gp;
     private GameState gs;
     private Timer timer;
+    private Random rand;
 
     private static final String JSON_STORE = "./data/gamestate.json";
     private JsonWriter jsonWriter;
@@ -31,11 +32,12 @@ public class Game extends JFrame {
         super("Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Assets.load();
+        Assets.getInstance();
         gs = new GameState();
         gp = new GamePanel(gs, this);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        Random rand = new Random();
 
         add(gp);
         addKeyListener(new KeyHandler());
@@ -133,11 +135,11 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) {
-        // new Game(); //Uncomment this for the GUI
+        new Game(); //Uncomment this for the GUI
         // honestly i can and will add some more to the game. i spent so much time
         // building the structure that there was no more time to implement fun features.
         // the hard part (sorting out the GUI and heirarchies) is done, now its just
         // minor tweaks and QOL stuff.
-        new ConsoleGame(); // Uncomment this line for ConsoleGame
+        // new ConsoleGame(); // Uncomment this line for ConsoleGame
     }
 }

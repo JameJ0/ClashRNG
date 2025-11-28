@@ -7,25 +7,36 @@ import javax.imageio.ImageIO;
 
 import model.Rarity;
 
-// static assets so any class can access them anywhere
+// static assets so any class can access them anywhere (Singleton)
 public class Assets {
-    public static Image knightSprite;
-    public static Image goblinSprite;
-    public static Image mageSprite;
-    public static Image banditSprite;
-    public static Image bg;
-    public static Image saveIcon;
-    public static Image commonItem;
-    public static Image uncommonItem;
-    public static Image rareItem;
-    public static Image epicItem;
-    public static Image legendaryItem;
-    // I know the checkstyle doesnt like the public fields, but this is useful
-    // to load the image once and have it accessable everywher in the project
+    private Image knightSprite;
+    private Image goblinSprite;
+    private Image mageSprite;
+    private Image banditSprite;
+    private Image bg;
+    private Image saveIcon;
+    private Image commonItem;
+    private Image uncommonItem;
+    private Image rareItem;
+    private Image epicItem;
+    private Image legendaryItem;
 
-    // Load images
-    @SuppressWarnings("methodlength") // I think it would be very appropriate here
-    public static void load() {
+    private static Assets instance = new Assets();
+
+    // EFFECTS: contructs the assets library once
+    private Assets() {
+        load();
+    }
+
+    // EFFECTS: returns an instance of the library
+    public static Assets getInstance() {
+        return instance;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: load images during the instantiation of the object
+    @SuppressWarnings("methodlength")
+    private void load() {
         try {
             knightSprite = ImageIO.read(new File("./res/images/knight.png"));
             knightSprite = knightSprite.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
@@ -56,7 +67,8 @@ public class Assets {
         }
     }
 
-    public static Image getItemImage(Rarity rarity) {
+    // EFFECTS: returns an image of an item based on rarity
+    public Image getItemImage(Rarity rarity) {
         switch (rarity) {
             case COMMON:
                 return commonItem;
@@ -69,6 +81,30 @@ public class Assets {
             default:
                 return legendaryItem;
         }
+    }
+
+    public Image getKnightSprite() {
+        return knightSprite;
+    }
+
+    public Image getGoblinSprite() {
+        return goblinSprite;
+    }
+
+    public Image getMageSprite() {
+        return mageSprite;
+    }
+
+    public Image getBanditSprite() {
+        return banditSprite;
+    }
+
+    public Image getBg() {
+        return bg;
+    }
+
+    public Image getSaveIcon() {
+        return saveIcon;
     }
 
 }

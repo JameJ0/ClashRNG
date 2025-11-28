@@ -1,24 +1,40 @@
 {
     "enemies": [
         {
-            "health": 5,
-            "loot": 5,
-            "inventory": [],
-            "type": "Goblin"
-        },
-        {
+            "posX": 1387,
+            "posY": 126,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
+            "posX": 178,
+            "posY": 386,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
+            "posX": 1550,
+            "posY": 281,
+            "health": 15,
+            "loot": 5,
+            "inventory": [],
+            "type": "Goblin"
+        },
+        {
+            "posX": 1283,
+            "posY": 31,
+            "health": 15,
+            "loot": 5,
+            "inventory": [],
+            "type": "Goblin"
+        },
+        {
+            "posX": 389,
+            "posY": 244,
             "health": 15,
             "loot": 5,
             "inventory": [],
@@ -26,11 +42,49 @@
         }
     ],
     "player": {
-        "mana": 100,
-        "name": "James",
-        "health": 8,
-        "loot": 0,
-        "inventory": [],
-        "type": "Mage"
+        "posX": 646,
+        "posY": 178,
+        "mana": 50,
+        "name": "Name",
+        "health": 20,
+        "loot": 50,
+        "inventory": [
+            {
+                "name": "Item",
+                "weight": 2,
+                "rarity": "COMMON"
+            },
+            {
+                "name": "Item",
+                "weight": 2,
+                "rarity": "COMMON"
+            },
+            {
+                "name": "Item",
+                "weight": 2,
+                "rarity": "COMMON"
+            },
+            {
+                "name": "Item",
+                "weight": 2,
+                "rarity": "COMMON"
+            },
+            {
+                "name": "Item",
+                "weight": 2,
+                "rarity": "COMMON"
+            },
+            {
+                "name": "Item",
+                "weight": 2,
+                "rarity": "RARE"
+            },
+            {
+                "name": "Item",
+                "weight": 2,
+                "rarity": "COMMON"
+            }
+        ],
+        "type": "Knight"
     }
 }

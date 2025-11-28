@@ -215,6 +215,8 @@ public abstract class Entity implements Writable {
         json.put("inventory", inventoryToJson());
         json.put("health", health);
         json.put("loot", loot);
+        json.put("posX", getX());
+        json.put("posY", getY());
         return json;
     }
 
@@ -226,5 +228,4 @@ public abstract class Entity implements Writable {
         }
         return jsonArray;
     }
-
 }

@@ -49,10 +49,10 @@ public class GamePanel extends JPanel {
     // EFFECTS: helper on the menu screen
     private void handleLoadingScreen(int mouseX, int mouseY) {
         if (gs.getStatus() == GameState.Status.MENU) {
-            if (mouseX >= MENU_BTN_X && mouseX <= MENU_BTN_X + MENU_BTN_W 
+            if (mouseX >= MENU_BTN_X && mouseX <= MENU_BTN_X + MENU_BTN_W
                     && mouseY >= MENU_BTN_Y_START && mouseY <= MENU_BTN_Y_START + MENU_BTN_H) {
                 game.startNewGame();
-            } else if (mouseX >= MENU_BTN_X && mouseX <= MENU_BTN_X + MENU_BTN_W 
+            } else if (mouseX >= MENU_BTN_X && mouseX <= MENU_BTN_X + MENU_BTN_W
                     && mouseY >= MENU_BTN_Y_START + 70 && mouseY <= MENU_BTN_Y_START + 70 + MENU_BTN_H) {
                 game.loadAndStart();
             }
@@ -62,8 +62,8 @@ public class GamePanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: helper on the save button
     private void handleSave(int mouseX, int mouseY) {
-        int iconW = Assets.saveIcon.getWidth(null);
-        int iconH = Assets.saveIcon.getHeight(null);
+        int iconW = Assets.getInstance().getSaveIcon().getWidth(null);
+        int iconH = Assets.getInstance().getSaveIcon().getHeight(null);
 
         int btnX = getWidth() - iconW;
         int btnY = 0;
@@ -139,7 +139,7 @@ public class GamePanel extends JPanel {
         if (gs.getStatus() == Status.MENU) {
             drawMenu(g);
         } else {
-            g.drawImage(Assets.bg, 0, 0, getWidth(), getHeight(), this);
+            g.drawImage(Assets.getInstance().getBg(), 0, 0, getWidth(), getHeight(), this);
             drawPlayer(g, gs.getPlayer());
             drawEnemies(g, gs.getEnemies());
             drawDroppedItems(g, gs.getDroppedItems());
@@ -255,9 +255,8 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draw the buttons in the UI (save icon, sell all button)
     public void drawUI(Graphics g) {
-        if (Assets.saveIcon != null) {
-            g.drawImage(Assets.saveIcon, getWidth() - Assets.saveIcon.getWidth(null), 0, null);
-        }
+        g.drawImage(Assets.getInstance().getSaveIcon(), getWidth() - Assets.getInstance().getSaveIcon().getWidth(null),
+                0, null);
 
         int btnY = getHeight() - INV_BAR_HEIGHT - 10 - SELL_ALL_BTN_HEIGHT;
 

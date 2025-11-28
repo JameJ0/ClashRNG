@@ -58,13 +58,13 @@ public class JsonReader {
         String type = jsonObject.getString("type");
         switch (type) {
             case "Knight":
-                player = new Knight(jsonObject.getString("name"), Assets.knightSprite);
+                player = new Knight(jsonObject.getString("name"), Assets.getInstance().getKnightSprite());
                 break;
             case "Mage":
-                player = new Mage(jsonObject.getString("name"), Assets.mageSprite);
+                player = new Mage(jsonObject.getString("name"), Assets.getInstance().getMageSprite());
                 break;
             case "Bandit":
-                player = new Bandit(jsonObject.getString("name"), Assets.banditSprite);
+                player = new Bandit(jsonObject.getString("name"), Assets.getInstance().getBanditSprite());
                 break;
             default:
                 throw new WrongEntityTypeException("The type " + type + " does not exist.");
@@ -76,6 +76,8 @@ public class JsonReader {
         player.addLoot(jsonObject.getInt("loot"));
         player.setHealth(jsonObject.getDouble("health"));
         player.setMana(jsonObject.getInt("mana"));
+        player.setX(jsonObject.getInt("posX"));
+        player.setY(jsonObject.getInt("posY"));
         return player;
     }
 
@@ -95,7 +97,7 @@ public class JsonReader {
         int weight = jsonObject.getInt("weight");
         String rarityString = jsonObject.getString("rarity");
         Rarity rarity = Rarity.valueOf(rarityString.toUpperCase());
-        return new Item(name, weight, rarity, Assets.getItemImage(rarity));
+        return new Item(name, weight, rarity, Assets.getInstance().getItemImage(rarity));
     }
 
     // EFFECTS: parses and instantiate an entity based on its type
@@ -105,12 +107,14 @@ public class JsonReader {
         String type = jsonObject.getString("type");
         switch (type) {
             case "Goblin":
-                enemy = new Goblin(Assets.goblinSprite);
+                enemy = new Goblin(Assets.getInstance().getGoblinSprite());
                 break;
             default:
                 throw new WrongEntityTypeException("The type " + type + " does not exist.");
         }
         List<Item> inventory = parseInventory(jsonObject.getJSONArray("inventory"));
+        enemy.setX(jsonObject.getInt("posX"));
+        enemy.setY(jsonObject.getInt("posY"));
         for (Item i : inventory) {
             enemy.addToInventory(i);
         }

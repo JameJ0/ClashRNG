@@ -30,9 +30,7 @@ public class GameState implements Writable {
         enemies = new ArrayList<>();
         droppedItems = new ArrayList<>();
 
-        player = new Knight("Name", Assets.knightSprite);
-        player.setX(100);
-        player.setY(100);
+        player = new Knight("Name", Assets.getInstance().getKnightSprite());
     }
 
     // MODIFIES: this
@@ -49,6 +47,7 @@ public class GameState implements Writable {
             }
             if (enemy.getHealth() <= 0) {
                 generateDrop(enemy);
+                player.addLoot(enemy.getLoot());
                 enemies.remove(i);
             }
         }
@@ -108,9 +107,13 @@ public class GameState implements Writable {
     public void respawnEnemies() {
         if (enemies.size() < 5) {
             for (int i = 0; i < 5 - enemies.size(); i++) {
-                Goblin g = new Goblin(Assets.goblinSprite);
+                Goblin g = new Goblin(Assets.getInstance().getGoblinSprite());
                 g.setX(rand.nextInt(GameState.WIDTH));
                 g.setY(rand.nextInt(GameState.HEIGHT));
+                while (player.colliding(g)) {
+                    g.setX(rand.nextInt(GameState.WIDTH));
+                    g.setY(rand.nextInt(GameState.HEIGHT));
+                }
                 enemies.add(g);
             }
         }
