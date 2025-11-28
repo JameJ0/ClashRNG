@@ -21,7 +21,7 @@ public class Assets {
     private Image epicItem;
     private Image legendaryItem;
 
-    private static Assets instance = new Assets();
+    private static Assets instance;
 
     // EFFECTS: contructs the assets library once
     private Assets() {
@@ -30,6 +30,9 @@ public class Assets {
 
     // EFFECTS: returns an instance of the library
     public static Assets getInstance() {
+        if (instance == null) {
+            instance = new Assets();
+        }
         return instance;
     }
 

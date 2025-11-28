@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-
 import model.*;
 import model.exceptions.WrongEntityTypeException;
 
@@ -60,7 +59,7 @@ public class ConsoleGame {
         System.out.println("\n                     Level 1-1 (console demo level)");
         System.out.println("-------------------------------------------------------------------------------------");
         System.out.println(
-             "In this level, there will be anywhere from 2 to 6 goblin-type enemies, which you fight sequentially.");
+                "In this level, there will be anywhere from 2 to 6 goblin-type enemies, which you fight sequentially.");
         System.out.println("Fight through the enemies, and perhaps even earn loot and drops along the way.");
         System.out.println(
                 "Be careful. once your health drops to 0, you lose. You will not keep your items in your next run.");

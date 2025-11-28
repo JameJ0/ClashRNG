@@ -2,8 +2,6 @@ package model;
 
 import java.awt.Image;
 
-import org.json.JSONObject;
-
 import ui.Assets;
 
 // represents a general enemy in the game

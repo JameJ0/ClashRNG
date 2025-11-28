@@ -2,8 +2,6 @@ package model;
 
 import org.json.JSONObject;
 
-import ui.Game;
-
 import java.awt.Image;
 
 // represents a player in the game
@@ -16,8 +14,8 @@ public abstract class Player extends Entity {
         super(0, hp, atk, def, spd, sprite);
         mana = mp;
         this.name = name;
-        setX(GameState.WIDTH/2);
-        setY(GameState.HEIGHT/2);
+        setX(GameState.WIDTH / 2);
+        setY(GameState.HEIGHT / 2);
     }
 
     public String getName() {
@@ -44,5 +42,5 @@ public abstract class Player extends Entity {
         json.put("mana", mana);
         return json;
     }
-    
+
 }

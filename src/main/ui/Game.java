@@ -6,7 +6,6 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 
 import model.*;
 import model.exceptions.WrongEntityTypeException;
@@ -20,7 +19,6 @@ public class Game extends JFrame {
     private GamePanel gp;
     private GameState gs;
     private Timer timer;
-    private Random rand;
 
     private static final String JSON_STORE = "./data/gamestate.json";
     private JsonWriter jsonWriter;
@@ -37,7 +35,6 @@ public class Game extends JFrame {
         gp = new GamePanel(gs, this);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        Random rand = new Random();
 
         add(gp);
         addKeyListener(new KeyHandler());

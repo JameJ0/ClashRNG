@@ -1,40 +1,40 @@
 {
     "enemies": [
         {
-            "posX": 1387,
-            "posY": 126,
+            "posX": 83,
+            "posY": 705,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
-            "posX": 178,
-            "posY": 386,
+            "posX": 1506,
+            "posY": 854,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
-            "posX": 1550,
-            "posY": 281,
+            "posX": 1545,
+            "posY": 69,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
-            "posX": 1283,
-            "posY": 31,
+            "posX": 512,
+            "posY": 139,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
-            "posX": 389,
-            "posY": 244,
+            "posX": 1251,
+            "posY": 664,
             "health": 15,
             "loot": 5,
             "inventory": [],
@@ -42,42 +42,17 @@
         }
     ],
     "player": {
-        "posX": 646,
-        "posY": 178,
+        "posX": 296,
+        "posY": 648,
         "mana": 50,
         "name": "Name",
         "health": 20,
-        "loot": 50,
+        "loot": 10,
         "inventory": [
             {
                 "name": "Item",
                 "weight": 2,
                 "rarity": "COMMON"
-            },
-            {
-                "name": "Item",
-                "weight": 2,
-                "rarity": "COMMON"
-            },
-            {
-                "name": "Item",
-                "weight": 2,
-                "rarity": "COMMON"
-            },
-            {
-                "name": "Item",
-                "weight": 2,
-                "rarity": "COMMON"
-            },
-            {
-                "name": "Item",
-                "weight": 2,
-                "rarity": "COMMON"
-            },
-            {
-                "name": "Item",
-                "weight": 2,
-                "rarity": "RARE"
             },
             {
                 "name": "Item",

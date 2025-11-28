@@ -54,21 +54,7 @@ public class JsonReader {
 
     // EFFECTS: parses player from JSONObject and returns it
     private Player parsePlayer(JSONObject jsonObject) throws WrongEntityTypeException {
-        Player player;
-        String type = jsonObject.getString("type");
-        switch (type) {
-            case "Knight":
-                player = new Knight(jsonObject.getString("name"), Assets.getInstance().getKnightSprite());
-                break;
-            case "Mage":
-                player = new Mage(jsonObject.getString("name"), Assets.getInstance().getMageSprite());
-                break;
-            case "Bandit":
-                player = new Bandit(jsonObject.getString("name"), Assets.getInstance().getBanditSprite());
-                break;
-            default:
-                throw new WrongEntityTypeException("The type " + type + " does not exist.");
-        }
+        Player player = parseType(jsonObject);
         List<Item> inventory = parseInventory(jsonObject.getJSONArray("inventory"));
         for (Item i : inventory) {
             player.addToInventory(i);
@@ -79,6 +65,20 @@ public class JsonReader {
         player.setX(jsonObject.getInt("posX"));
         player.setY(jsonObject.getInt("posY"));
         return player;
+    }
+
+    private Player parseType(JSONObject jsonObject) throws WrongEntityTypeException {
+        String type = jsonObject.getString("type");
+        switch (type) {
+            case "Knight":
+                return new Knight(jsonObject.getString("name"), Assets.getInstance().getKnightSprite());
+            case "Mage":
+                return new Mage(jsonObject.getString("name"), Assets.getInstance().getMageSprite());
+            case "Bandit":
+                return new Bandit(jsonObject.getString("name"), Assets.getInstance().getBanditSprite());
+            default:
+                throw new WrongEntityTypeException("The type " + type + " does not exist.");
+        }
     }
 
     // parses the items in a jsonArray as a List
@@ -132,5 +132,5 @@ public class JsonReader {
         }
         return enemies;
     }
-    
+
 }
