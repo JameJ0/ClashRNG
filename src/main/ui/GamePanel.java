@@ -30,6 +30,10 @@ public class GamePanel extends JPanel {
     private static final int MENU_BTN_X = GameState.WIDTH / 2 - MENU_BTN_W / 2;
     private static final int MENU_BTN_Y_START = 300;
 
+    private boolean showSaveCheck = false;
+    private int saveCheckTimer = 0;
+    private static final int CHECKMARK_DURATION = 100;
+
     // EFFECTS: initiates the panel, and add the gamestate and the game controller
     public GamePanel(GameState gs, Game game) {
         this.gs = gs;
@@ -70,9 +74,9 @@ public class GamePanel extends JPanel {
 
         if (mouseX >= btnX && mouseX <= btnX + iconW
                 && mouseY >= btnY && mouseY <= btnY + iconH) {
-            System.out.println("Game Saved");
             game.saveGame();
-            System.exit(0);
+            showSaveCheck = true;
+            saveCheckTimer = CHECKMARK_DURATION;
         }
     }
 
@@ -147,8 +151,19 @@ public class GamePanel extends JPanel {
             drawInventory(g);
             drawCoins(g);
             drawUI(g);
+            handleSaveTimerLogic();
         }
 
+    }
+
+    // EFFECTS: creates a simple timer to show the checkmark when saving for a brief period
+    private void handleSaveTimerLogic() {
+        if (showSaveCheck) {
+            saveCheckTimer--;
+            if (saveCheckTimer <= 0) {
+                showSaveCheck = false;
+            }
+        }
     }
 
     // MODIFIES: g
@@ -255,8 +270,7 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draw the buttons in the UI (save icon, sell all button)
     public void drawUI(Graphics g) {
-        g.drawImage(Assets.getInstance().getSaveIcon(), getWidth() - Assets.getInstance().getSaveIcon().getWidth(null),
-                0, null);
+        drawSaveIcon(g);
 
         int btnY = getHeight() - INV_BAR_HEIGHT - 10 - SELL_ALL_BTN_HEIGHT;
 
@@ -266,6 +280,20 @@ public class GamePanel extends JPanel {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 12));
         g.drawString("SELL COMMON", SELL_ALL_BTN_X + 5, btnY + 25);
+    }
+
+    // MODIFIES: g
+    // EFFECTS: helper to drawUI, draws the save icon and shows a green checkmark when pressed
+    private void drawSaveIcon(Graphics g) {
+        int saveX = getWidth() - Assets.getInstance().getSaveIcon().getWidth(null);
+        g.drawImage(Assets.getInstance().getSaveIcon(), saveX, 0, null);
+
+        if (showSaveCheck) {
+            Image check = Assets.getInstance().getCheckmark();
+            int checkX = saveX + 10;
+            int checkY = 10;
+            g.drawImage(check, checkX, checkY, null);
+        }
     }
 
     public void setGameState(GameState gs) {

@@ -1,40 +1,40 @@
 {
     "enemies": [
         {
-            "posX": 83,
-            "posY": 705,
+            "posX": 24,
+            "posY": 91,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
-            "posX": 1506,
-            "posY": 854,
+            "posX": 318,
+            "posY": 34,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
-            "posX": 1545,
-            "posY": 69,
+            "posX": 680,
+            "posY": 781,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
-            "posX": 512,
-            "posY": 139,
+            "posX": 295,
+            "posY": 465,
             "health": 15,
             "loot": 5,
             "inventory": [],
             "type": "Goblin"
         },
         {
-            "posX": 1251,
-            "posY": 664,
+            "posX": 592,
+            "posY": 829,
             "health": 15,
             "loot": 5,
             "inventory": [],
@@ -42,24 +42,17 @@
         }
     ],
     "player": {
-        "posX": 296,
-        "posY": 648,
+        "posX": 614,
+        "posY": 676,
         "mana": 50,
         "name": "Name",
         "health": 20,
         "loot": 10,
-        "inventory": [
-            {
-                "name": "Item",
-                "weight": 2,
-                "rarity": "COMMON"
-            },
-            {
-                "name": "Item",
-                "weight": 2,
-                "rarity": "COMMON"
-            }
-        ],
+        "inventory": [{
+            "name": "Item",
+            "weight": 2,
+            "rarity": "COMMON"
+        }],
         "type": "Knight"
     }
 }

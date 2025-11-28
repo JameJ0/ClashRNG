@@ -1,17 +1,23 @@
 {
     "enemies": [
         {
+            "posX": 0,
+            "posY": 0,
             "health": 15,
             "inventory": [],
             "type": "123"
         },
         {
+            "posX": 0,
+            "posY": 0,
             "health": 10,
             "inventory": [],
             "type": "123"
         }
     ],
     "player": {
+        "posX": 800,
+        "posY": 450,
         "mana": 50,
         "name": "a",
         "health": 10,

@@ -20,6 +20,7 @@ public class Assets {
     private Image rareItem;
     private Image epicItem;
     private Image legendaryItem;
+    private Image checkmark;
 
     private static Assets instance;
 
@@ -54,6 +55,8 @@ public class Assets {
 
             saveIcon = ImageIO.read(new File("./res/images/saveIcon.png"));
             saveIcon = saveIcon.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
+            checkmark = ImageIO.read(new File("./res/images/checkmark.png"));
+            checkmark = checkmark.getScaledInstance(30, -1, Image.SCALE_SMOOTH);
 
             commonItem = ImageIO.read(new File("./res/images/commonItem.png"));
             commonItem = commonItem.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
@@ -108,6 +111,10 @@ public class Assets {
 
     public Image getSaveIcon() {
         return saveIcon;
+    }
+
+    public Image getCheckmark() {
+        return checkmark;
     }
 
 }

@@ -43,7 +43,25 @@ public class Game extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
+        setupWindowListener();
         addTimer();
+    }
+
+    // EFFECTS: initializes the window listener to print the event log on close
+    private void setupWindowListener() {
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                printLog(EventLog.getInstance());
+            }
+        });
+    }
+
+    // EFFECTS: prints the whole log when the game closes
+    private void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println(next.toString() + "\n");
+        }
     }
 
     // MODIFIES: this
@@ -52,6 +70,7 @@ public class Game extends JFrame {
         gs = new GameState();
         gp.setGameState(gs);
         gs.setStatus(GameState.Status.PLAYING);
+        gs.logGameStart();
     }
 
     // MODIFIES: this
@@ -71,6 +90,7 @@ public class Game extends JFrame {
 
         gs.getPlayer().addLoot(sellValue);
         inventory.remove(index);
+        EventLog.getInstance().logEvent(new Event("Item manually sold for " + sellValue + "coins."));
     }
 
     // EFFECTS: tells the gamestate that a key has been pressed/released
@@ -111,7 +131,7 @@ public class Game extends JFrame {
             jsonWriter.open();
             jsonWriter.write(gs);
             jsonWriter.close();
-            System.out.println("Saved game to " + JSON_STORE);
+            EventLog.getInstance().logEvent(new Event("Saved game to file."));
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -123,7 +143,7 @@ public class Game extends JFrame {
         try {
             gs = jsonReader.read();
             gp.setGameState(gs);
-            System.out.println("Loaded previous game from " + JSON_STORE);
+            EventLog.getInstance().logEvent(new Event("Loaded game from file."));
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         } catch (WrongEntityTypeException e) {
@@ -132,7 +152,7 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Game(); //Uncomment this for the GUI
+        new Game(); // Uncomment this for the GUI
         // honestly i can and will add some more to the game. i spent so much time
         // building the structure that there was no more time to implement fun features.
         // the hard part (sorting out the GUI and heirarchies) is done, now its just

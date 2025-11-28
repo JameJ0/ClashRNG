@@ -1,6 +1,8 @@
 {
     "enemies": [
         {
+            "posX": 0,
+            "posY": 0,
             "health": 15,
             "inventory": [{
             "name": "Item",
@@ -10,12 +12,16 @@
             "type": "Goblin"
         },
         {
+            "posX": 0,
+            "posY": 0,
             "health": 10,
             "inventory": [],
             "type": "Goblin"
         }
     ],
     "player": {
+        "posX": 800,
+        "posY": 450,
         "mana": 50,
         "name": "a",
         "health": 10,

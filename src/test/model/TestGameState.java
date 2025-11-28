@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 
 import model.GameState.Status;
+import ui.Assets;
 
 public class TestGameState {
 
@@ -53,6 +54,18 @@ public class TestGameState {
     }
 
     @Test
+    void testLog() {
+        gs.logGameStart();
+        Iterator<Event> iterator = EventLog.getInstance().iterator();
+        int counter = 0;
+        while (iterator.hasNext()) {
+            iterator.next();
+            counter++;
+        }
+        assertTrue(counter > 0);
+    }
+
+    @Test
     void testJson() {
         enemies.add(goblin);
         enemies.add(goblin);
@@ -79,7 +92,7 @@ public class TestGameState {
         gs.setEnemies(enemies);
         gs.setPlayer(player);
         gs.update();
-        assertEquals(1, player.getX());
+        assertEquals(801, player.getX());
         assertEquals(Status.GAME_OVER, gs.getStatus());
     }
 
@@ -93,10 +106,72 @@ public class TestGameState {
 
     @Test
     void testItemCollection() {
-        for (int i = 0; i < 100; i++) {
+        goblin.setX(0);
+        goblin.setY(0);
+        for (int i = 0; i < 1000; i++) {
             gs.generateDrop(goblin);
         }
-        assertTrue(gs.getDroppedItems().size() >= 1);
+        player.setX(0);
+        player.setY(0);
+        gs.setPlayer(player);
+        for (int i = 0; i < 100; i++) {
+            gs.update();
+        }
+        assertTrue(gs.getDroppedItems().size() == 0);
+        assertTrue(player.getInventory().size() > 0);
+    }
+
+    @Test
+    void testRespawn() {
+        player.setX(0);
+        player.setY(0);
+        gs.setPlayer(player);
+        for (int i = 0; i < 10000; i++) {
+            gs.respawnEnemies();
+        }
+    }
+
+    @Test
+    void testItemCollectionNotCollectable() {
+        goblin.setX(500);
+        goblin.setY(500);
+        for (int i = 0; i < 1000; i++) {
+            gs.generateDrop(goblin);
+        }
+        player.setX(0);
+        player.setY(0);
+        gs.setPlayer(player);
+        for (int i = 0; i < 100; i++) {
+            gs.update();
+        }
+        assertTrue(gs.getDroppedItems().size() > 1);
+        assertTrue(player.getInventory().size() == 0);
+    }
+
+    @Test
+    void testEnemyDie() {
+        goblin.setHealth(0);
+        List<Enemy> test = new ArrayList<>();
+        test.add(goblin);
+        gs.setEnemies(test);
+        gs.update();
+        assertEquals(3, gs.getEnemies().size());
+    }
+
+    @Test
+    void testCollision1() {
+        List<Enemy> test = new ArrayList<>();
+        goblin = new Goblin(Assets.getInstance().getGoblinSprite());
+        player = new Knight("test", Assets.getInstance().getKnightSprite());
+        goblin.setX(0);
+        goblin.setY(0);
+        test.add(goblin);
+        gs.setEnemies(test);
+        player.setX(0);
+        player.setY(0);
+        gs.setPlayer(player);
+        gs.update();
+        assertTrue(player.colliding(goblin));
     }
 
     @Test

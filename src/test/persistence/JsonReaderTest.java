@@ -41,7 +41,7 @@ class JsonReaderTest {
             List<Item> inventory = player.getInventory();
             assertEquals(1, inventory.size());
         } catch (Exception e) {
-            fail("should've thrown exception");
+            fail("shouldnt've thrown exception");
         }
     }
 

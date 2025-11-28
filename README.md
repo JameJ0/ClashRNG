@@ -17,6 +17,10 @@ The application will display a heads-up display (HUD) of the player's stats (lik
 
 This project is of interest to me because I've always played video games my whole life, but have never thought to create one myself. I've attempted to create a game in high school, but the code was a mess because of a lack of coding experience. I hope that through this project, I'll have another shot at making a well-organized network of code and classes that is (mostly) bug-free, easy to modify for the developer, and can be easily read by someone else.
 
+## How to play?
+
+WASD to move, and if you collide with an enemy, they take damage. Uou get coins when you kill an enemy, or you manually sell items in your inventory (right click on the item yo u want to sell). use the sell all common button to sell all common items. click the save button to save, and exit the game by closing the window.
+
 ## User Stories
 
 - As a user, I want to have the option to select different classes of characters at the start of the game

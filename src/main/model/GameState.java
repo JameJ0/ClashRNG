@@ -33,6 +33,11 @@ public class GameState implements Writable {
         player = new Knight("Name", Assets.getInstance().getKnightSprite());
     }
 
+    // EFFECTS: logs the game when it starts
+    public void logGameStart() {
+        EventLog.getInstance().logEvent(new Event("New game started with " + player.toString() + "."));
+    }
+
     // MODIFIES: this
     // changes the positions of the entites in the game
     public void update() {
@@ -49,6 +54,7 @@ public class GameState implements Writable {
                 generateDrop(enemy);
                 player.addLoot(enemy.getLoot());
                 enemies.remove(i);
+                EventLog.getInstance().logEvent(new Event(enemy.toString() + " defeated."));
             }
         }
         if (player.getHealth() <= 0) {
@@ -69,6 +75,7 @@ public class GameState implements Writable {
         }
         player.setInventory(noCommon);
         player.addLoot(size - noCommon.size());
+        EventLog.getInstance().logEvent(new Event("Discarded " + (size - noCommon.size()) + " common items."));
     }
 
     // MODIFIES: this
@@ -84,6 +91,7 @@ public class GameState implements Writable {
             if (player.colliding(item.getX(), item.getY(), itemW, itemH)) {
                 player.addToInventory(item);
                 droppedItems.remove(i);
+                EventLog.getInstance().logEvent(new Event("Picked up item: " + item.toString()));
             }
         }
     }
