@@ -19,7 +19,7 @@ This project is of interest to me because I've always played video games my whol
 
 ## How to play?
 
-WASD to move, and if you collide with an enemy, they take damage. Uou get coins when you kill an enemy, or you manually sell items in your inventory (right click on the item yo u want to sell). use the sell all common button to sell all common items. click the save button to save, and exit the game by closing the window.
+WASD to move, and if you collide with an enemy, they take damage. Uou get coins when you kill an enemy, or you manually sell items in your inventory (click on the item yo u want to sell). use the sell all common button to sell all common items. click the save button to save, and exit the game by closing the window.
 
 ## User Stories
 
@@ -34,4 +34,71 @@ WASD to move, and if you collide with an enemy, they take damage. Uou get coins 
 - As a user, I want to be able to click on an item and sell it for coins
 - As a user, I want to be able to quick sell the low-rarity common items in one simple click
 
+## Phase 4: Task 2
+
+Fri Nov 28 05:29:03 PST 2025
+Goblin spanwed at 1422, 54.
+
+Fri Nov 28 05:29:03 PST 2025
+Goblin spanwed at 242, 629.
+
+Fri Nov 28 05:29:03 PST 2025
+Goblin spanwed at 234, 289.
+
+Fri Nov 28 05:29:03 PST 2025
+Goblin spanwed at 21, 5.
+
+Fri Nov 28 05:29:03 PST 2025
+Goblin spanwed at 453, 469.
+
+Fri Nov 28 05:29:07 PST 2025
+Uncommon Item dropped at 453, 469.
+
+Fri Nov 28 05:29:07 PST 2025
+Goblin defeated.
+
+Fri Nov 28 05:29:07 PST 2025
+Goblin spanwed at 280, 626.
+
+Fri Nov 28 05:29:07 PST 2025
+Picked up an item: Uncommon Item
+
+Fri Nov 28 05:29:09 PST 2025
+Goblin defeated.
+
+Fri Nov 28 05:29:09 PST 2025
+Goblin spanwed at 1022, 499.
+
+Fri Nov 28 05:29:09 PST 2025
+Goblin defeated.
+
+Fri Nov 28 05:29:09 PST 2025
+Goblin spanwed at 92, 510.
+
+Fri Nov 28 05:29:10 PST 2025
+Common Item dropped at 92, 510.
+
+Fri Nov 28 05:29:10 PST 2025
+Goblin defeated.
+
+Fri Nov 28 05:29:10 PST 2025
+Goblin spanwed at 220, 880.
+
+Fri Nov 28 05:29:10 PST 2025
+Picked up an item: Common Item
+
+Fri Nov 28 05:29:13 PST 2025
+Common Item dropped at 234, 289.
+
+Fri Nov 28 05:29:13 PST 2025
+Goblin defeated.
+
+Fri Nov 28 05:29:13 PST 2025
+Goblin spanwed at 1425, 73.
+
+Fri Nov 28 05:29:13 PST 2025
+Picked up an item: Common Item
+
+Fri Nov 28 05:29:16 PST 2025
+Discarded 1 common items from player inventory.
 

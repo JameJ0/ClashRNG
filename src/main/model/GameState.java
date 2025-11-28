@@ -33,11 +33,6 @@ public class GameState implements Writable {
         player = new Knight("Name", Assets.getInstance().getKnightSprite());
     }
 
-    // EFFECTS: logs the game when it starts
-    public void logGameStart() {
-        EventLog.getInstance().logEvent(new Event("New game started with " + player.toString() + "."));
-    }
-
     // MODIFIES: this
     // changes the positions of the entites in the game
     public void update() {
@@ -59,6 +54,7 @@ public class GameState implements Writable {
         }
         if (player.getHealth() <= 0) {
             gameStatus = Status.GAME_OVER;
+
         }
         respawnEnemies();
     }
@@ -75,7 +71,8 @@ public class GameState implements Writable {
         }
         player.setInventory(noCommon);
         player.addLoot(size - noCommon.size());
-        EventLog.getInstance().logEvent(new Event("Discarded " + (size - noCommon.size()) + " common items."));
+        EventLog.getInstance()
+                .logEvent(new Event("Discarded " + (size - noCommon.size()) + " common items from player inventory."));
     }
 
     // MODIFIES: this
@@ -91,7 +88,7 @@ public class GameState implements Writable {
             if (player.colliding(item.getX(), item.getY(), itemW, itemH)) {
                 player.addToInventory(item);
                 droppedItems.remove(i);
-                EventLog.getInstance().logEvent(new Event("Picked up item: " + item.toString()));
+                EventLog.getInstance().logEvent(new Event("Picked up an item: " + item.toString()));
             }
         }
     }
@@ -106,6 +103,8 @@ public class GameState implements Writable {
             i.setX(e.getX());
             i.setY(e.getY());
             droppedItems.add(i);
+            EventLog.getInstance()
+                    .logEvent(new Event(i.toString() + " dropped at " + i.getX() + ", " + i.getY() + "."));
         }
     }
 
@@ -113,16 +112,20 @@ public class GameState implements Writable {
     // EFFECTS: when there are less than 5 enemies on screen, regenerate more
     // enemies.
     public void respawnEnemies() {
-        if (enemies.size() < 5) {
-            for (int i = 0; i < 5 - enemies.size(); i++) {
-                Goblin g = new Goblin(Assets.getInstance().getGoblinSprite());
-                g.setX(rand.nextInt(GameState.WIDTH));
-                g.setY(rand.nextInt(GameState.HEIGHT));
-                while (player.colliding(g)) {
+        if (gameStatus == Status.PLAYING) {
+            if (enemies.size() < 5) {
+                for (int i = 0; i < 5 - enemies.size(); i++) {
+                    Goblin g = new Goblin(Assets.getInstance().getGoblinSprite());
                     g.setX(rand.nextInt(GameState.WIDTH));
                     g.setY(rand.nextInt(GameState.HEIGHT));
+                    while (player.colliding(g)) {
+                        g.setX(rand.nextInt(GameState.WIDTH));
+                        g.setY(rand.nextInt(GameState.HEIGHT));
+                    }
+                    enemies.add(g);
+                    EventLog.getInstance()
+                            .logEvent(new Event(g.toString() + " spanwed at " + g.getX() + ", " + g.getY() + "."));
                 }
-                enemies.add(g);
             }
         }
     }

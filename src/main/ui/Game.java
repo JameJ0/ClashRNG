@@ -70,7 +70,6 @@ public class Game extends JFrame {
         gs = new GameState();
         gp.setGameState(gs);
         gs.setStatus(GameState.Status.PLAYING);
-        gs.logGameStart();
     }
 
     // MODIFIES: this
@@ -90,7 +89,6 @@ public class Game extends JFrame {
 
         gs.getPlayer().addLoot(sellValue);
         inventory.remove(index);
-        EventLog.getInstance().logEvent(new Event("Item manually sold for " + sellValue + "coins."));
     }
 
     // EFFECTS: tells the gamestate that a key has been pressed/released
@@ -131,7 +129,6 @@ public class Game extends JFrame {
             jsonWriter.open();
             jsonWriter.write(gs);
             jsonWriter.close();
-            EventLog.getInstance().logEvent(new Event("Saved game to file."));
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -143,7 +140,6 @@ public class Game extends JFrame {
         try {
             gs = jsonReader.read();
             gp.setGameState(gs);
-            EventLog.getInstance().logEvent(new Event("Loaded game from file."));
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         } catch (WrongEntityTypeException e) {

@@ -31,6 +31,7 @@ public class TestGameState {
         enemies = new ArrayList<>();
         goblin = new Goblin(fakeSprite);
         goblin2 = new Goblin(fakeSprite);
+        gs.setStatus(Status.PLAYING);
     }
 
     @Test
@@ -51,18 +52,6 @@ public class TestGameState {
         enemies.add(goblin);
         gs.setEnemies(enemies);
         assertEquals(2, gs.getEnemies().size());
-    }
-
-    @Test
-    void testLog() {
-        gs.logGameStart();
-        Iterator<Event> iterator = EventLog.getInstance().iterator();
-        int counter = 0;
-        while (iterator.hasNext()) {
-            iterator.next();
-            counter++;
-        }
-        assertTrue(counter > 0);
     }
 
     @Test
