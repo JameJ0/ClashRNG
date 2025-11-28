@@ -33,7 +33,7 @@ public class GameState implements Writable {
         player = new Knight("Name", Assets.getInstance().getKnightSprite());
     }
 
-    // MODIFIES: this
+    // MODIFIES: this 
     // changes the positions of the entites in the game
     public void update() {
         checkItemCollection();
