@@ -1,6 +1,6 @@
 # My Personal Project
 
-## Roguelike video game (I'll have to think of a title)
+## Roguelike video game
 
 For the term project, I would like to make a roguelike video game.
 
